@@ -30,8 +30,8 @@ function App() {
             {data?.data.map(row => (
               <tr key={row.Address}>
                 <td>{row.Address}</td>
-                <td>{row.Interested}</td>
-                <td><a href={row.Link}>∆</a></td>
+                <td>{row.Interested.join(", ")}</td>
+                <td><a target="_blank" href={row.Link}>∆</a></td>
               </tr>
             ))}
           </tbody>
