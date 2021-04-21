@@ -3,7 +3,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Table } from 'react-bulma-components';
 
 function App() {
