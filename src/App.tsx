@@ -3,6 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+import { Table } from 'react-bulma-components';
 
 function App() {
   const { data } = useSWR("https://mause-housing.builtwithdark.com/", key =>
@@ -16,7 +18,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <table>
+        <Table>
           <tbody>
             {data?.data.map(row => (
               <tr key={row.Address}>
@@ -24,7 +26,7 @@ function App() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </header>
     </div>
   );
