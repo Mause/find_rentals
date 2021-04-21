@@ -10,6 +10,8 @@ function App() {
     axios.get<
       {
         Address: string;
+        Interested: string[];
+        Link: string;
       }[]
     >(key, { responseType: "json" })
   );
@@ -21,12 +23,15 @@ function App() {
           <thead>
             <tr>
               <th>Address</th>
+              <th>Interested</th>
             </tr>
           </thead>
           <tbody>
             {data?.data.map(row => (
               <tr key={row.Address}>
                 <td>{row.Address}</td>
+                <td>{row.Interested}</td>
+                <td><a href={row.Link}>∆</a></td>
               </tr>
             ))}
           </tbody>
