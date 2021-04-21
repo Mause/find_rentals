@@ -31,7 +31,11 @@ function App() {
               <tr key={row.Address}>
                 <td>{row.Address}</td>
                 <td>{row.Interested.join(", ")}</td>
-                <td><a target="_blank" href={row.Link}>∆</a></td>
+                <td>
+                  <a rel="noreferrer" target="_blank" href={row.Link}>
+                    ∆
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>
