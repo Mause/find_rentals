@@ -22,7 +22,8 @@ function App() {
       },
       {
         Header: "Interested",
-        accessor: (row: Row) => row.Interested
+        accessor: (row: Row) => row.Interested,
+        Cell: ({ cell: { value } }: CellProps<object>) => value.join(", ")
       },
       {
         Header: "Link",
