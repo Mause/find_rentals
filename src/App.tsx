@@ -4,7 +4,7 @@ import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
 import { Table } from "react-bulma-components";
-import { useTable } from "react-table";
+import { useTable, CellProps } from "react-table";
 interface Row {
   Address: string;
   Interested: string[];
@@ -23,7 +23,8 @@ function App() {
         Header: "Interested"
       },
       {
-        Header: "Link"
+        Header: "Link",
+        Cell: ({ cell: { value } }: CellProps<object>) => <a href={value}>∆</a>
       }
     ],
     []
