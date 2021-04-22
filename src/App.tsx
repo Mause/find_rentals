@@ -17,13 +17,16 @@ function App() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Address"
+        Header: "Address",
+        accessor: row => row.Address
       },
       {
-        Header: "Interested"
+        Header: "Interested",
+        accessor: row => row.Interested
       },
       {
         Header: "Link",
+        accessor: row => row.Link,
         Cell: ({ cell: { value } }: CellProps<object>) => <a href={value}>∆</a>
       }
     ],
