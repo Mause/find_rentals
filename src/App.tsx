@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
@@ -13,8 +12,9 @@ interface Row {
   Beds: number;
 }
 function App() {
-  const { data } = useSWR("https://mause-housing.builtwithdark.com/", key =>
-    axios.get<Row[]>(key, { responseType: "json" })
+  const { data, isValidating, error } = useSWR(
+    "https://mause-housing.builtwithdark.com/",
+    key => axios.get<Row[]>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
     () => [
@@ -38,7 +38,11 @@ function App() {
       {
         Header: "Link",
         accessor: (row: Row) => row.Link,
-        Cell: ({ cell: { value } }: CellProps<object>) => <a rel="noreferrer" target="_blank" href={value}>∆</a>
+        Cell: ({ cell: { value } }: CellProps<object>) => (
+          <a rel="noreferrer" target="_blank" href={value}>
+            ∆
+          </a>
+        )
       }
     ],
     []
@@ -55,7 +59,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          {isValidating && "Loading..."}
+          {error}
+        </p>
         <Table {...getTableProps()}>
           <thead>
             {// Loop over the header rows
@@ -67,8 +74,12 @@ function App() {
                   // Apply the header cell props
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                                   <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
                     </span>
                   </th>
                 ))}
