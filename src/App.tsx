@@ -21,6 +21,14 @@ function App() {
         accessor: (row: Row) => row.Address
       },
       {
+        Header: "Price",
+        accessor: (row: Row) => row.Price
+      },
+      {
+        Header: "Beds",
+        accessor: (row: Row) => row.Beds
+      },
+      {
         Header: "Interested",
         accessor: (row: Row) => row.Interested,
         Cell: ({ cell: { value } }: CellProps<object>) => value.join(", ")
