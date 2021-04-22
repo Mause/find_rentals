@@ -13,8 +13,9 @@ interface Row {
   Beds: number;
 }
 function App() {
-  const { data, loading, error } = useSWR("https://mause-housing.builtwithdark.com/", key =>
-    axios.get<Row[]>(key, { responseType: "json" })
+  const { data, loading, error } = useSWR(
+    "https://mause-housing.builtwithdark.com/",
+    key => axios.get<Row[]>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
     () => [
@@ -38,7 +39,11 @@ function App() {
       {
         Header: "Link",
         accessor: (row: Row) => row.Link,
-        Cell: ({ cell: { value } }: CellProps<object>) => <a rel="noreferrer" target="_blank" href={value}>∆</a>
+        Cell: ({ cell: { value } }: CellProps<object>) => (
+          <a rel="noreferrer" target="_blank" href={value}>
+            ∆
+          </a>
+        )
       }
     ],
     []
@@ -56,8 +61,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-            { loading && 'Loading...' }
-            { error }
+          {loading && "Loading..."}
+          {error}
         </p>
         <Table {...getTableProps()}>
           <thead>
@@ -70,8 +75,12 @@ function App() {
                   // Apply the header cell props
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                                   <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
                     </span>
                   </th>
                 ))}
