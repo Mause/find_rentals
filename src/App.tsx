@@ -4,7 +4,7 @@ import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
 import { Table } from "react-bulma-components";
-import { useTable, CellProps } from "react-table";
+import { useTable, CellProps, useSortBy } from "react-table";
 interface Row {
   Address: string;
   Interested: string[];
@@ -50,7 +50,7 @@ function App() {
     headerGroups,
     rows,
     prepareRow
-  } = useTable<Row>({ columns, data: data?.data || [] });
+  } = useTable<Row>({ columns, data: data?.data || [] }, useSortBy);
 
   return (
     <div className="App">
@@ -65,9 +65,11 @@ function App() {
                 {// Loop over the headers in each row
                 headerGroup.headers.map(column => (
                   // Apply the header cell props
-                  <th {...column.getHeaderProps()}>
-                    {// Render the header
-                    column.render("Header")}
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                                   <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    </span>
                   </th>
                 ))}
               </tr>
