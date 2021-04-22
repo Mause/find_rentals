@@ -9,6 +9,8 @@ interface Row {
   Address: string;
   Interested: string[];
   Link: string;
+  Price: string;
+  Beds: number;
 }
 function App() {
   const { data } = useSWR("https://mause-housing.builtwithdark.com/", key =>
