@@ -18,15 +18,15 @@ function App() {
     () => [
       {
         Header: "Address",
-        accessor: row => row.Address
+        accessor: (row: Row) => row.Address
       },
       {
         Header: "Interested",
-        accessor: row => row.Interested
+        accessor: (row: Row) => row.Interested
       },
       {
         Header: "Link",
-        accessor: row => row.Link,
+        accessor: (row: Row) => row.Link,
         Cell: ({ cell: { value } }: CellProps<object>) => <a href={value}>∆</a>
       }
     ],
