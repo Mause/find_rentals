@@ -1,7 +1,9 @@
-module.exports = (req, res) => {
-      res.json({
-              body: req.body,
-                  query: req.query,
-                      cookies: req.cookies,
-                        })
-}
+import { VercelRequest, VercelResponse } from "@vercel/node";
+
+export default (request: VercelRequest, response: VercelResponse) => {
+  response.json({
+    body: request.body,
+    query: request.query,
+    cookies: request.cookies
+  });
+};
