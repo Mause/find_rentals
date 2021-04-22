@@ -38,7 +38,7 @@ function App() {
       {
         Header: "Link",
         accessor: (row: Row) => row.Link,
-        Cell: ({ cell: { value } }: CellProps<object>) => <a href={value}>∆</a>
+        Cell: ({ cell: { value } }: CellProps<object>) => <a rel="nofollow" target="_blank" href={value}>∆</a>
       }
     ],
     []
