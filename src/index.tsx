@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SWRConfig } from 'swr';
 
 ReactDOM.render(
   <React.StrictMode>
+  <SWRConfig value={{refreshInterval: 20000}}>
     <App />
+  </SWRConfig>
   </React.StrictMode>,
   document.getElementById('root')
 );
