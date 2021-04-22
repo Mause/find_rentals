@@ -58,18 +58,24 @@ function App() {
               </tr>
             ))}
           </thead>
-          <tbody>
-            {data?.data.map(row => (
-              <tr key={row.Address}>
-                <td>{row.Address}</td>
-                <td>{row.Interested.join(", ")}</td>
-                <td>
-                  <a rel="noreferrer" target="_blank" href={row.Link}>
-                    ∆
-                  </a>
-                </td>
-              </tr>
-            ))}
+          <tbody {...getTableBodyProps()}>
+            {// Loop over the table rows
+            rows.map(row => {
+              // Prepare the row for display
+              prepareRow(row);
+              return (
+                // Apply the row props
+                <tr {...row.getRowProps()}>
+                  {// Loop over the rows cells
+                  row.cells.map(cell => {
+                    // Apply the cell props
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}{" "}
           </tbody>
         </Table>
       </header>
