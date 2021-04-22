@@ -13,7 +13,7 @@ interface Row {
   Beds: number;
 }
 function App() {
-  const { data } = useSWR("https://mause-housing.builtwithdark.com/", key =>
+  const { data, loading, error } = useSWR("https://mause-housing.builtwithdark.com/", key =>
     axios.get<Row[]>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
@@ -55,7 +55,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+            { loading && 'Loading...' }
+            { error }
+        </p>
         <Table {...getTableProps()}>
           <thead>
             {// Loop over the header rows
