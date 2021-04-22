@@ -13,7 +13,7 @@ interface Row {
   Beds: number;
 }
 function App() {
-  const { data, loading, error } = useSWR(
+  const { data, isValidating, error } = useSWR(
     "https://mause-housing.builtwithdark.com/",
     key => axios.get<Row[]>(key, { responseType: "json" })
   );
@@ -61,7 +61,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          {loading && "Loading..."}
+          {isValidating && "Loading..."}
           {error}
         </p>
         <Table {...getTableProps()}>
