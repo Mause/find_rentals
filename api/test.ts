@@ -10,7 +10,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const rows = (await sheet.getRows()).map(row => {
     const orow = {};
     for (const header of sheet.headerValues.slice(1)) {
-      orow[header] = row[name];
+      orow[header] = row[header];
     }
     return orow;
   });
