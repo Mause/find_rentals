@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Table, Tag, Section, Container } from "react-bulma-components";
+import { Button, Table, Tag, Section, Container } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -63,10 +63,21 @@ function App() {
   return (
     <Section>
       <Container breakpoint="fluid">
-        <p>
-          {isValidating && "Loading..."}
-          {error}
-        </p>
+        <div className="field">
+          <p className="control">
+            <Button><span>Left</span></Button>
+          </p>
+          <p class="control">
+            <Button><span>Middle</span></Button>
+          </p>
+          <p class="control">
+            <Button><span>Right</span></Button>
+          </p>
+          <p>
+            {isValidating && "Loading..."}
+            {error}
+          </p>
+        </div>
         <Table {...getTableProps()} style={{width: 'inherit'}}>
           <thead>
             {// Loop over the header rows
