@@ -4,8 +4,8 @@ import useSWR from "swr";
 import axios from "axios";
 import { Table } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Row {
   Address: string;
