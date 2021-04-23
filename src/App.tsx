@@ -63,21 +63,15 @@ function App() {
   return (
     <Section>
       <Container breakpoint="fluid">
-        <Form.Field>
-          <Form.Control>
-            <Button><span>Left</span></Button>
-          </Form.Control>
-          <Form.Control>
-            <Button><span>Middle</span></Button>
-          </Form.Control>
-          <Form.Control>
-            <Button><span>Right</span></Button>
-          </Form.Control>
+        <Button.Group>
+          <Button><span>Left</span></Button>
+          <Button><span>Middle</span></Button>
+          <Button><span>Right</span></Button>
           <Form.Control>
             {isValidating && "Loading..."}
             {error}
           </Form.Control>
-        </Form.Field>
+        </Button.Group>
         <Table {...getTableProps()} style={{width: 'inherit'}}>
           <thead>
             {// Loop over the header rows
