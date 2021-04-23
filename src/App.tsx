@@ -67,7 +67,7 @@ function App() {
           {isValidating && "Loading..."}
           {error}
         </p>
-        <Table {...getTableProps()}>
+        <Table {...getTableProps()} style={{width: 'inherit'}}>
           <thead>
             {// Loop over the header rows
               headerGroups.map(headerGroup => (
