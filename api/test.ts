@@ -8,7 +8,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
   const rows = (await sheet.getRows()).map(row => {
-    const orow = {};
+    const orow: any = {};
     for (const header of sheet.headerValues.slice(1)) {
       orow[header] = row[header];
     }
