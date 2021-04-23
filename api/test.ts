@@ -6,5 +6,6 @@ doc.useApiKey(process.env.GOOGLE_API_KEY!);
 
 export default async (request: VercelRequest, response: VercelResponse) => {
   await doc.loadInfo();
-  response.json({body: doc.title});
+  const rows = await doc.getRows();
+  response.json({body: doc.title, rows});
 };
