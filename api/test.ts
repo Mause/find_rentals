@@ -10,6 +10,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   const statusMapping: {[key: string]: string} = {};
 
+  await sheet.loadCells(sheet.a1SheetName);
+
   const rows = (await sheet.getRows()).map(row => {
     const orow: any = {};
 
