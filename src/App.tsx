@@ -67,10 +67,10 @@ function App() {
           <Button><span>Left</span></Button>
           <Button><span>Middle</span></Button>
           <Button><span>Right</span></Button>
-          <Form.Control>
+          <div>
             {isValidating && "Loading..."}
             {error}
-          </Form.Control>
+          </div>
         </Button.Group>
         <Table {...getTableProps()} style={{width: 'inherit'}}>
           <thead>
