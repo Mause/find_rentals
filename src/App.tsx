@@ -37,7 +37,7 @@ function App() {
       {
         Header: "Interested",
         accessor: (row: Row) => row.Interested,
-        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <Tag key={initials}>{initials}</Tag>)}</span>,
+        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span><Tag key={initials}>{initials.split(' ')[0]}</Tag>&nbsp;</span>)}</span>,
       },
       {
         Header: "Link",
