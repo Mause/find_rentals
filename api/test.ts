@@ -15,8 +15,9 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const rows = (await sheet.getRows()).map(row => {
     const orow: any = {};
 
+    console.log('looking at cell', row.rowIndex - 1, 0);
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    if (cell.backgroundColor) {
+    if (cell?.backgroundColor) {
       statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
     }
 
