@@ -62,7 +62,7 @@ function App() {
 
   return (
     <Section>
-      <Container fluid>
+      <Container breakpoint="fluid">
         <p>
           {isValidating && "Loading..."}
           {error}
