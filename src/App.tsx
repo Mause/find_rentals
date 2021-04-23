@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Table, Tag } from "react-bulma-components";
+import { Table, Tag, Columns } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
@@ -61,8 +61,8 @@ function App() {
   } = useTable<Row>({ columns, data: data?.data || [] }, useSortBy);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <Columns>
+      <Columns.Column>
         <p>
           {isValidating && "Loading..."}
           {error}
@@ -110,8 +110,8 @@ function App() {
               })}{" "}
           </tbody>
         </Table>
-      </header>
-    </div>
+      </Columns.Column>
+    </Columns>
   );
 }
 
