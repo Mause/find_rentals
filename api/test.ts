@@ -13,7 +13,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const rows = (await sheet.getRows()).map(row => {
     const orow: any = {};
 
-    let cell = sheet.getCell(row.rowIndex, 0);
+    let cell = sheet.getCell(row.rowIndex - 1, 0);
     statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
 
     for (const header of sheet.headerValues.slice(1)) {
@@ -24,7 +24,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   });
 
   rows.forEach((row, idx) => {
-    let cell = sheet.getCell(row.rowIndex, idx + 1 + 1);
+    let cell = sheet.getCell(idx, 1);
     row.Status = statusMapping[cell.backgroundColor.toString()];
   });
 
