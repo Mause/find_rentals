@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { GoogleSpreadsheet } from 'google-spreadsheets';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 const doc = new GoogleSpreadsheet('....');
 doc.useApiKey(process.env.GOOGLE_API_KEY);
