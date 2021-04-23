@@ -1,11 +1,11 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { GoogleSpreadsheet } from "google-spreadsheet";
 
-const doc = new GoogleSpreadsheet('....');
+const doc = new GoogleSpreadsheet("....");
 doc.useApiKey(process.env.GOOGLE_API_KEY);
 
-export default (request: VercelRequest, response: VercelResponse) => {
-  doc.loadInfo();
+export default async (request: VercelRequest, response: VercelResponse) => {
+  await doc.loadInfo();
   response.json({
     body: doc.title,
     query: request.query,
