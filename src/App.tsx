@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Table, Tag, Columns } from "react-bulma-components";
+import { Table, Tag, Section, Container } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
@@ -61,13 +61,13 @@ function App() {
   } = useTable<Row>({ columns, data: data?.data || [] }, useSortBy);
 
   return (
-    <Columns>
-      <Columns.Column>
+    <Section>
+      <Container breakpoint="fluid">
         <p>
           {isValidating && "Loading..."}
           {error}
         </p>
-        <Table {...getTableProps()}>
+        <Table {...getTableProps()} style={{width: 'inherit'}}>
           <thead>
             {// Loop over the header rows
               headerGroups.map(headerGroup => (
@@ -110,8 +110,8 @@ function App() {
               })}{" "}
           </tbody>
         </Table>
-      </Columns.Column>
-    </Columns>
+      </Container>
+    </Section>
   );
 }
 
