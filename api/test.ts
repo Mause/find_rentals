@@ -8,7 +8,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
 
-  const statusMapping: {[key: string]: string} = {};
+  const statusMapping: { [key: string]: string } = {};
 
   await sheet.loadCells(sheet.a1SheetName);
 
@@ -16,7 +16,9 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const orow: any = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
+    if (cell.backgroundColor) {
+      statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
+    }
 
     for (const header of sheet.headerValues.slice(1)) {
       orow[header] = row[header];
@@ -24,6 +26,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
     return orow;
   });
+
+  console.log('statusMapping', statusMapping);
 
   rows.forEach((row, idx) => {
     let cell = sheet.getCell(idx, 1);
