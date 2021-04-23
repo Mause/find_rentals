@@ -4,6 +4,9 @@ import useSWR from "swr";
 import axios from "axios";
 import { Table, Tag } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+
 interface Row {
   Address: string;
   Interested: string[];
@@ -11,6 +14,7 @@ interface Row {
   Price: string;
   Beds: number;
 }
+
 function App() {
   const { data, isValidating, error } = useSWR(
     "https://mause-housing.builtwithdark.com/",
@@ -40,7 +44,7 @@ function App() {
         accessor: (row: Row) => row.Link,
         Cell: ({ cell: { value } }: CellProps<object>) => (
           <a rel="noreferrer" target="_blank" href={value}>
-            ∆
+            <FontAwesomeIcon icon={faExternalLinkAlt} />
           </a>
         )
       }
