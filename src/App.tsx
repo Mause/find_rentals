@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Table, Tag, Columns, Column } from "react-bulma-components";
+import { Table, Tag, Columns } from "react-bulma-components";
 import { useTable, CellProps, useSortBy } from "react-table";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
