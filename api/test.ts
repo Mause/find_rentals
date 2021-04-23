@@ -12,11 +12,11 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   await sheet.loadCells(sheet.a1SheetName);
 
-  const rows = (await sheet.getRows()).map(row => {
+  const rows = (await sheet.getRows()).map((row) => {
     const orow: any = {};
 
-    console.log('looking at cell', row.rowIndex - 1, 0);
     let cell = sheet.getCell(row.rowIndex - 1, 0);
+    console.log("looking at cell", row.rowIndex - 1, 0, cell, row.a1Range);
     if (cell?.backgroundColor) {
       statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
     }
@@ -28,11 +28,13 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     return orow;
   });
 
-  console.log('statusMapping', statusMapping);
+  console.log("statusMapping", statusMapping);
 
   rows.forEach((row, idx) => {
     let cell = sheet.getCell(idx, 1);
-    row.Status = statusMapping[cell.backgroundColor.toString()];
+    if (cell?.backgroundColor) {
+      row.Status = statusMapping[cell.backgroundColor.toString()];
+    }
   });
 
   response.json({ title: doc.title, rows, statusMapping });
