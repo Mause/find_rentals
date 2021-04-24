@@ -1,5 +1,10 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { CellFormat, Color, GoogleSpreadsheet } from "google-spreadsheet";
+import {
+  CellFormat,
+  Color,
+  GoogleSpreadsheet,
+  GoogleSpreadsheetCell,
+} from "google-spreadsheet";
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
@@ -16,9 +21,14 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const orow: any = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    console.log("looking at cell", row.rowIndex - 1, 0, cell, row.a1Range);
-    if (cell?.backgroundColor) {
-      statusMapping[cell.backgroundColor.toString()] = sheet.headerValues[0];
+    console.log(
+      "looking at cell",
+      row.rowIndex - 1,
+      0,
+      getBackgroundColor(cell)
+    );
+    if (getBackgroundColor(cell)) {
+      statusMapping[getBackgroundColor(cell)!] = sheet.headerValues[0];
     }
 
     for (const header of sheet.headerValues.slice(1)) {
@@ -32,10 +42,20 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   rows.forEach((row, idx) => {
     let cell = sheet.getCell(idx, 1);
-    if (cell?.backgroundColor) {
-      row.Status = statusMapping[cell.backgroundColor.toString()];
+    if (getBackgroundColor(cell)) {
+      row.Status = statusMapping[getBackgroundColor(cell)!];
     }
   });
 
   response.json({ title: doc.title, rows, statusMapping });
 };
+
+function getBackgroundColor(
+  cell: GoogleSpreadsheetCell | undefined
+): string | undefined {
+  try {
+    return cell?.backgroundColor.toString();
+  } catch (e) {
+    return undefined;
+  }
+}
