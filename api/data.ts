@@ -37,9 +37,12 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     if (getBackgroundColor(cell)) {
       row.RealStatus = statusMapping[getBackgroundColor(cell)!];
     }
-    row.Interested = row.Interested.split(", ").map(
-      (initial: string) => initial.split(" ")[0]
-    );
+    row.Beds = parseInt(row.Beds);
+    row.Interested = row.Interested
+      ? row.Interested.split(", ")
+          .map((initial: string) => initial.split(" ")[0])
+          .filter((initial: string) => initial === initial.toUpperCase())
+      : [];
   });
 
   response.json({ title: doc.title, rows });
