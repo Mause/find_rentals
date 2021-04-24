@@ -21,12 +21,6 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const orow: any = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    console.log(
-      "looking at cell",
-      row.rowIndex - 1,
-      0,
-      getBackgroundColor(cell)
-    );
     if (getBackgroundColor(cell)) {
       statusMapping[getBackgroundColor(cell)!] = cell.value.toString();
     }
@@ -38,16 +32,17 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     return orow;
   });
 
-  console.log("statusMapping", statusMapping);
-
   rows.forEach((row, idx) => {
     let cell = sheet.getCell(idx, 1);
     if (getBackgroundColor(cell)) {
-      row.Status = statusMapping[getBackgroundColor(cell)!];
+      row.RealStatus = statusMapping[getBackgroundColor(cell)!];
     }
+    row.Interested = row.Interested.split(", ").map(
+      (initial: string) => initial.split(" ")[0]
+    );
   });
 
-  response.json({ title: doc.title, rows, statusMapping });
+  response.json({ title: doc.title, rows });
 };
 
 function getBackgroundColor(
