@@ -28,7 +28,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       getBackgroundColor(cell)
     );
     if (getBackgroundColor(cell)) {
-      statusMapping[getBackgroundColor(cell)!] = sheet.headerValues[0];
+      statusMapping[getBackgroundColor(cell)!] = cell.value.toString();
     }
 
     for (const header of sheet.headerValues.slice(1)) {
