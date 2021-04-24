@@ -53,9 +53,14 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 function getBackgroundColor(
   cell: GoogleSpreadsheetCell | undefined
 ): string | undefined {
+  let bg;
   try {
-    return cell?.backgroundColor.toString();
+    bg = cell?.backgroundColor;
   } catch (e) {
     return undefined;
   }
+
+  if (!bg) return undefined;
+
+  return `${bg.red}${bg.green}${bg.blue}${bg.alpha}`;
 }
