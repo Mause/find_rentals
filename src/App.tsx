@@ -17,8 +17,8 @@ interface Row {
 
 function App() {
   const { data, isValidating, error } = useSWR(
-    "https://mause-housing.builtwithdark.com/",
-    key => axios.get<Row[]>(key, { responseType: "json" })
+    "/api/data",
+    key => axios.get<{ rows: Row[] }>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
     () => [
@@ -58,7 +58,7 @@ function App() {
     headerGroups,
     rows,
     prepareRow
-  } = useTable<Row>({ columns, data: data?.data || [] }, useSortBy);
+  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useSortBy);
 
   return (
     <Section>
@@ -72,7 +72,7 @@ function App() {
             {error}
           </div>
         </Button.Group>
-        <Table {...getTableProps()} style={{width: 'inherit'}}>
+        <Table {...getTableProps()} style={{ width: 'inherit' }}>
           <thead>
             {// Loop over the header rows
               headerGroups.map(headerGroup => (
