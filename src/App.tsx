@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container, Form } from "react-bulma-components";
+import { Button, Table, Tag, Section, Container, Form, Columns } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -69,23 +69,31 @@ function App() {
   return (
     <Section>
       <Container breakpoint="fluid">
-        <Button.Group>
-          <Button><span>Left</span></Button>
-          <Button><span>Middle</span></Button>
-          <Button><span>Right</span></Button>
-          <div>
-            {isValidating && "Loading..."}
-            {error}
-          </div>
-        </Button.Group>
-        {headerGroups.map(headerGroup =>
-          headerGroup.headers
-            .filter(column => column.Filter)
-            .map(column => column.render('Filter'))
-        )}
-        <Form.Label>
-          Search: <Form.Input onChange={event => { setGlobalFilter(event.target.value); }} />
-        </Form.Label>
+        <Columns>
+          <Columns.Column>
+            <Form.Field horizontal>
+              <Form.Label>Search:&nbsp;</Form.Label>
+              <Form.Field.Body>
+                <Form.Input onChange={event => { setGlobalFilter(event.target.value); }} />
+              </Form.Field.Body>
+            </Form.Field>
+          </Columns.Column>
+          <Columns.Column>
+            <Form.Field horizontal>
+              <Button.Group>
+                <Button disabled><span>Left</span></Button>
+                <Button disabled><span>Middle</span></Button>
+                <Button disabled><span>Right</span></Button>
+              </Button.Group>
+            </Form.Field>
+          </Columns.Column>
+          <Columns.Column>
+            <div>
+              {isValidating && "Loading..."}
+              {error}
+            </div>
+          </Columns.Column>
+        </Columns>
         <Table {...getTableProps()} style={{ width: 'inherit' }}>
           <thead>
             {// Loop over the header rows
