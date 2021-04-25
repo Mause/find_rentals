@@ -42,7 +42,7 @@ function App() {
       {
         Header: "Interested",
         accessor: (row: Row) => row.Interested,
-        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span><Tag key={initials}>{initials}</Tag>&nbsp;</span>)}</span>,
+        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span key={initials}><Tag>{initials}</Tag>&nbsp;</span>)}</span>,
       },
       {
         Header: "Link",
@@ -134,7 +134,7 @@ function App() {
                       })}
                   </tr>
                 );
-              })}{" "}
+              })}
           </tbody>
         </Table>
       </Container>
