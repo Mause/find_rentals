@@ -14,6 +14,10 @@ interface Row {
   Link: string;
   Price: string;
   Beds: number;
+  'Good things': string;
+  Concerns: string,
+  'Viewed?': string,
+  Status: string
 }
 
 function App() {
