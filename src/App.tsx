@@ -2,12 +2,13 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container } from "react-bulma-components";
-import { useTable, CellProps, useSortBy } from "react-table";
+import { Button, Table, Tag, Section, Container, Form, Columns } from "react-bulma-components";
+import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Row {
+  RealStatus: string;
   Address: string;
   Interested: string[];
   Link: string;
@@ -21,7 +22,11 @@ function App() {
     key => axios.get<{ rows: Row[] }>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
-    () => [
+    (): Column<Row>[] => [
+      {
+        Header: 'Status',
+        accessor: (row: Row) => row.RealStatus,
+      },
       {
         Header: "Address",
         accessor: (row: Row) => row.Address
@@ -37,7 +42,7 @@ function App() {
       {
         Header: "Interested",
         accessor: (row: Row) => row.Interested,
-        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span><Tag key={initials}>{initials.split(' ')[0]}</Tag>&nbsp;</span>)}</span>,
+        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span><Tag key={initials}>{initials}</Tag>&nbsp;</span>)}</span>,
       },
       {
         Header: "Link",
@@ -57,21 +62,38 @@ function App() {
     getTableBodyProps,
     headerGroups,
     rows,
+    setGlobalFilter,
     prepareRow
-  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useSortBy);
+  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useSortBy);
 
   return (
     <Section>
       <Container breakpoint="fluid">
-        <Button.Group>
-          <Button><span>Left</span></Button>
-          <Button><span>Middle</span></Button>
-          <Button><span>Right</span></Button>
-          <div>
-            {isValidating && "Loading..."}
-            {error}
-          </div>
-        </Button.Group>
+        <Columns>
+          <Columns.Column>
+            <Form.Field horizontal>
+              <Form.Label>Search:&nbsp;</Form.Label>
+              <Form.Field.Body>
+                <Form.Input onChange={event => { setGlobalFilter(event.target.value); }} />
+              </Form.Field.Body>
+            </Form.Field>
+          </Columns.Column>
+          <Columns.Column>
+            <Form.Field horizontal>
+              <Button.Group>
+                <Button disabled><span>Left</span></Button>
+                <Button disabled><span>Middle</span></Button>
+                <Button disabled><span>Right</span></Button>
+              </Button.Group>
+            </Form.Field>
+          </Columns.Column>
+          <Columns.Column>
+            <div>
+              {isValidating && "Loading..."}
+              {error}
+            </div>
+          </Columns.Column>
+        </Columns>
         <Table {...getTableProps()} style={{ width: 'inherit' }}>
           <thead>
             {// Loop over the header rows
