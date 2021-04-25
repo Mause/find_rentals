@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container, Form, Columns, Heading } from "react-bulma-components";
+import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -85,14 +85,20 @@ function App() {
                 <Button disabled><span>Left</span></Button>
                 <Button disabled><span>Middle</span></Button>
                 <Button disabled><span>Right</span></Button>
+                <div>
+                  {isValidating && <Loader
+                    style={{
+                      width: 30,
+                      height: 30,
+                      border: '4px solid black',
+                      borderTopColor: 'transparent',
+                      borderRightColor: 'transparent',
+                    }}
+                  />}
+                  {error}
+                </div>
               </Button.Group>
             </Form.Field>
-          </Columns.Column>
-          <Columns.Column>
-            <div>
-              {isValidating && "Loading..."}
-              {error}
-            </div>
           </Columns.Column>
         </Columns>
         <Table {...getTableProps()} style={{ width: 'inherit' }}>
