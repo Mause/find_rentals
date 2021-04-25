@@ -2,8 +2,8 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container } from "react-bulma-components";
-import { useTable, CellProps, useSortBy, Column } from "react-table";
+import { Button, Table, Tag, Section, Container, Form } from "react-bulma-components";
+import { useTable, CellProps, useSortBy, Column, FilterProps, useFilters } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -26,6 +26,13 @@ function App() {
       {
         Header: 'Status',
         accessor: (row: Row) => row.RealStatus,
+        Filter({ column: { id, Header, setFilter } }: FilterProps<Row>) {
+          return <Form.Label>
+            {Header}
+            <Form.Input key={id} onChange={event => { setFilter(event.target.value); }} />
+          </Form.Label>;
+        },
+        filter: 'text'
       },
       {
         Header: "Address",
@@ -63,7 +70,7 @@ function App() {
     headerGroups,
     rows,
     prepareRow
-  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useSortBy);
+  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useFilters, useSortBy);
 
   return (
     <Section>
@@ -77,6 +84,11 @@ function App() {
             {error}
           </div>
         </Button.Group>
+        {headerGroups.map(headerGroup =>
+          headerGroup.headers
+            .filter(column => column.Filter)
+            .map(column => column.render('Filter'))
+        )}
         <Table {...getTableProps()} style={{ width: 'inherit' }}>
           <thead>
             {// Loop over the header rows
