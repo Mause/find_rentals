@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container, Form, Columns } from "react-bulma-components";
+import { Button, Table, Tag, Section, Container, Form, Columns, Heading } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
@@ -68,6 +68,7 @@ function App() {
 
   return (
     <Section>
+      <Heading>Find Rentals</Heading>
       <Container breakpoint="fluid">
         <Columns>
           <Columns.Column>
