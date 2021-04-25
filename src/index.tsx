@@ -7,7 +7,7 @@ import { SWRConfig } from 'swr';
 
 ReactDOM.render(
   <React.StrictMode>
-  <SWRConfig value={{refreshInterval: 20000}}>
+  <SWRConfig value={{}}>
     <App />
   </SWRConfig>
   </React.StrictMode>,
