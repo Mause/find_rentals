@@ -3,11 +3,12 @@ import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
 import { Button, Table, Tag, Section, Container } from "react-bulma-components";
-import { useTable, CellProps, useSortBy } from "react-table";
+import { useTable, CellProps, useSortBy, Column } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Row {
+  RealStatus: string;
   Address: string;
   Interested: string[];
   Link: string;
@@ -21,7 +22,11 @@ function App() {
     key => axios.get<{ rows: Row[] }>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
-    () => [
+    (): Column<Row>[] => [
+      {
+        Header: 'Status',
+        accessor: (row: Row) => row.RealStatus,
+      },
       {
         Header: "Address",
         accessor: (row: Row) => row.Address
