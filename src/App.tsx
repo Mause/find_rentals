@@ -7,7 +7,7 @@ import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-t
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
-interface Row {
+interface Property {
   RealStatus: string;
   Address: string;
   Interested: string[];
@@ -23,34 +23,34 @@ interface Row {
 function App() {
   const { data, isValidating, error } = useSWR(
     "/api/data",
-    key => axios.get<{ rows: Row[] }>(key, { responseType: "json" })
+    key => axios.get<{ rows: Property[] }>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
-    (): Column<Row>[] => [
+    (): Column<Property>[] => [
       {
         Header: 'Status',
-        accessor: (row: Row) => row.RealStatus,
+        accessor: (row: Property) => row.RealStatus,
       },
       {
         Header: "Address",
-        accessor: (row: Row) => row.Address
+        accessor: (row: Property) => row.Address
       },
       {
         Header: "Price",
-        accessor: (row: Row) => row.Price
+        accessor: (row: Property) => row.Price
       },
       {
         Header: "Beds",
-        accessor: (row: Row) => row.Beds
+        accessor: (row: Property) => row.Beds
       },
       {
         Header: "Interested",
-        accessor: (row: Row) => row.Interested,
-        Cell: ({ cell: { value } }: CellProps<Row, string[]>) => <span>{value.map(initials => <span key={initials}><Tag>{initials}</Tag>&nbsp;</span>)}</span>,
+        accessor: (row: Property) => row.Interested,
+        Cell: ({ cell: { value } }: CellProps<Property, string[]>) => <span>{value.map(initials => <span key={initials}><Tag>{initials}</Tag>&nbsp;</span>)}</span>,
       },
       {
         Header: "Link",
-        accessor: (row: Row) => row.Link,
+        accessor: (row: Property) => row.Link,
         Cell: ({ cell: { value } }: CellProps<object>) => (
           <a rel="noreferrer" target="_blank" href={value}>
             <FontAwesomeIcon icon={faExternalLinkAlt} />
@@ -68,7 +68,7 @@ function App() {
     rows,
     setGlobalFilter,
     prepareRow
-  } = useTable<Row>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useSortBy);
+  } = useTable<Property>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useSortBy);
 
   return (
     <Section>
