@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Table, Tag, Section, Container, Form, Columns, Heading } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Row {
   RealStatus: string;
@@ -107,10 +107,10 @@ function App() {
                       <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                         {column.render("Header")}
                         <span>
-                          {column.isSorted
+                          {' '}{column.isSorted
                             ? column.isSortedDesc
-                              ? " 🔽"
-                              : " 🔼"
+                              ? <FontAwesomeIcon icon={faArrowDown} />
+                              : <FontAwesomeIcon icon={faArrowUp} />
                             : ""}
                         </span>
                       </th>
