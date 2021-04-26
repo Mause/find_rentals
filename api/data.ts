@@ -33,7 +33,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   });
 
   rows.forEach((row, idx) => {
-    let cell = sheet.getCell(idx, 1);
+    let cell = sheet.getCell(idx + 1, 1);
     if (getBackgroundColor(cell)) {
       row.RealStatus = statusMapping[getBackgroundColor(cell)!];
     }
