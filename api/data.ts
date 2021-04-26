@@ -1,10 +1,10 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import {
-  CellFormat,
   Color,
   GoogleSpreadsheet,
   GoogleSpreadsheetCell,
 } from "google-spreadsheet";
+import _ from "lodash";
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
@@ -33,9 +33,13 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   });
 
   rows.forEach((row, idx) => {
-    let cell = sheet.getCell(idx + 1, 1);
-    if (getBackgroundColor(cell)) {
-      row.RealStatus = statusMapping[getBackgroundColor(cell)!];
+    const cell = sheet.getCell(idx + 1, 1);
+    const colour = getBackgroundColor(cell);
+    if (colour) {
+      row.RealStatus = statusMapping[colour!];
+      if (typeof row.RealStatus === "undefined") {
+        console.warn("unable to lookup color: ", colour);
+      }
     }
     row.Beds = parseInt(row.Beds);
     row.Interested = row.Interested
@@ -45,13 +49,15 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       : [];
   });
 
-  response.json({ title: doc.title, rows });
+  Object.assign(statusMapping, _.invert(statusMapping));
+
+  response.json({ title: doc.title, rows, statusMapping });
 };
 
 function getBackgroundColor(
   cell: GoogleSpreadsheetCell | undefined
 ): string | undefined {
-  let bg;
+  let bg: Color;
   try {
     bg = cell?.backgroundColor;
   } catch (e) {
@@ -60,5 +66,9 @@ function getBackgroundColor(
 
   if (!bg) return undefined;
 
-  return `${bg.red}${bg.green}${bg.blue}${bg.alpha}`;
+  const format = (value: number) => Math.round((value || 0) * 256);
+
+  return `rgba(${format(bg.red)}, ${format(bg.green)}, ${format(bg.blue)}, ${
+    100 - format(bg.alpha)
+  })`;
 }

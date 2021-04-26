@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown, faArrowUp, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp, faExternalLinkAlt, faSquareFull } from "@fortawesome/free-solid-svg-icons";
 
 interface Property {
   RealStatus: string;
@@ -17,16 +17,23 @@ interface Property {
   'Good things': string;
   Concerns: string,
   'Viewed?': string,
-  Status: string
+  'Status?': string
 }
 
 function App() {
   const { data, isValidating, error } = useSWR(
     "/api/data",
-    key => axios.get<{ rows: Property[] }>(key, { responseType: "json" })
+    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" })
   );
   const columns = React.useMemo(
     (): Column<Property>[] => [
+      {
+        id: 'status_color',
+        accessor: (row: Property) => row.RealStatus,
+        Cell: (row: CellProps<Property, string>) => <span >
+          <FontAwesomeIcon icon={faSquareFull} style={{ color: data?.data.statusMapping[row.value] }} />
+        </span>,
+      },
       {
         Header: 'Status',
         accessor: (row: Property) => row.RealStatus,
@@ -58,7 +65,7 @@ function App() {
         )
       }
     ],
-    []
+    [data?.data.statusMapping]
   );
 
   const {
