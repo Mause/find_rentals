@@ -17,7 +17,7 @@ interface Property {
   'Good things': string;
   Concerns: string,
   'Viewed?': string,
-  Status: string
+  'Status?': string
 }
 
 function App() {
