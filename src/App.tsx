@@ -107,7 +107,7 @@ function App() {
                       borderRightColor: 'transparent',
                     }}
                   />}
-                  {error}
+                  {error?.toString()}
                 </div>
               </Button.Group>
             </Form.Field>
