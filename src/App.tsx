@@ -7,24 +7,12 @@ import { useTable, CellProps, useSortBy, Column, useGlobalFilter, useFilters, Ro
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faExternalLinkAlt, faSquareFull } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
-
-interface Property {
-  RealStatus: string;
-  Address: string;
-  Interested: string[];
-  Link: string;
-  Price: string;
-  Beds: number;
-  'Good things': string;
-  Concerns: string,
-  'Viewed?': string,
-  'Status?': string
-}
+import { DataResponse, Property } from "./types";
 
 function App() {
   const { data, isValidating, error } = useSWR(
     "/api/data",
-    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" }),
+    key => axios.get<DataResponse>(key, { responseType: "json" }),
     { refreshInterval: 0 }
   );
   const columns = React.useMemo(

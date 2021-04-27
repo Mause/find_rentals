@@ -1,10 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import {
-  Color,
-  GoogleSpreadsheet,
-  GoogleSpreadsheetCell,
-} from "google-spreadsheet";
+import { GoogleSpreadsheet, GoogleSpreadsheetCell } from "google-spreadsheet";
 import _ from "lodash";
+import { DataResponse, Property } from "../src/types";
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
@@ -17,8 +14,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   await sheet.loadCells(sheet.a1SheetName);
 
-  const rows = (await sheet.getRows()).map((row) => {
-    const orow: any = {};
+  const rows: Partial<Property>[] = (await sheet.getRows()).map((row) => {
+    const orow: Partial<Property> = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
     if (getBackgroundColor(cell)) {
@@ -26,7 +23,20 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     }
 
     for (const header of sheet.headerValues.slice(1)) {
-      orow[header] = row[header];
+      let value = row[header];
+
+      if (header == "Beds") {
+        value = parseInt(value);
+      } else if (header == "Interested") {
+        value = value
+          ? value
+              .split(", ")
+              .map((initial: string) => initial.split(" ")[0])
+              .filter((initial: string) => initial === initial.toUpperCase())
+          : [];
+      }
+
+      orow[header] = value;
     }
 
     return orow;
@@ -41,17 +51,17 @@ export default async (request: VercelRequest, response: VercelResponse) => {
         console.warn("unable to lookup color: ", colour);
       }
     }
-    row.Beds = parseInt(row.Beds);
-    row.Interested = row.Interested
-      ? row.Interested.split(", ")
-          .map((initial: string) => initial.split(" ")[0])
-          .filter((initial: string) => initial === initial.toUpperCase())
-      : [];
   });
 
   Object.assign(statusMapping, _.invert(statusMapping));
 
-  response.json({ title: doc.title, rows, statusMapping });
+  const res: DataResponse = {
+    title: doc.title,
+    rows: rows as Property[],
+    statusMapping,
+  };
+
+  response.json(res);
 };
 
 function getBackgroundColor(
