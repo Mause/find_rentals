@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
 import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader } from "react-bulma-components";
-import { useTable, CellProps, useSortBy, Column, useGlobalFilter } from "react-table";
+import { useTable, CellProps, useSortBy, Column, useGlobalFilter, useFilters, Row, IdType } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faExternalLinkAlt, faSquareFull } from "@fortawesome/free-solid-svg-icons";
+import _ from "lodash";
 
 interface Property {
   RealStatus: string;
@@ -23,16 +24,18 @@ interface Property {
 function App() {
   const { data, isValidating, error } = useSWR(
     "/api/data",
-    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" })
+    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" }),
+    { refreshInterval: 0 }
   );
   const columns = React.useMemo(
     (): Column<Property>[] => [
       {
         id: 'status_color',
         accessor: (row: Property) => row.RealStatus,
-        Cell: (row: CellProps<Property, string>) => <span >
-          <FontAwesomeIcon icon={faSquareFull} style={{ color: data?.data.statusMapping[row.value] }} />
-        </span>,
+        Cell: (row: CellProps<Property, string>) => {
+          const style = data?.data.statusMapping[row.value];
+          return style ? <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} /> : null;
+        },
       },
       {
         Header: 'Status',
@@ -54,6 +57,9 @@ function App() {
         Header: "Interested",
         accessor: (row: Property) => row.Interested,
         Cell: ({ cell: { value } }: CellProps<Property, string[]>) => <span>{value.map(initials => <span key={initials}><Tag>{initials}</Tag>&nbsp;</span>)}</span>,
+        filter: (rows: Array<Row<Property>>, columnIds: Array<IdType<Property>>, filterValue: string[]) => {
+          return rows.filter(row => filterValue.every(filterVal => row.values.Interested.includes(filterVal)));
+        }
       },
       {
         Header: "Link",
@@ -73,9 +79,41 @@ function App() {
     getTableBodyProps,
     headerGroups,
     rows,
+    setFilter,
     setGlobalFilter,
     prepareRow
-  } = useTable<Property>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useSortBy);
+  } = useTable<Property>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useFilters, useSortBy);
+
+  const [selected, setSelected] = useState<string[]>([]);
+  function addOrRemove(initial: string) {
+    return () => {
+      let s = _.clone(selected);
+
+      if (selected.includes(initial)) {
+        _.pull(s, initial);
+      } else {
+        s.push(initial);
+      }
+
+      setSelected(s);
+      console.log(s);
+
+      setFilter('Interested', s);
+    }
+  }
+
+  const fact = (initial: string) => (
+    <>
+      <Form.Field horizontal>
+        <Form.Field.Body>
+          <Form.Checkbox checked={selected.includes(initial)} onClick={addOrRemove(initial)}>
+            {initial}
+          </Form.Checkbox>
+        </Form.Field.Body>
+      </Form.Field>
+      &nbsp;
+    </>
+  );
 
   return (
     <Section>
@@ -93,9 +131,7 @@ function App() {
           <Columns.Column>
             <Form.Field horizontal>
               <Button.Group>
-                <Button disabled><span>Left</span></Button>
-                <Button disabled><span>Middle</span></Button>
-                <Button disabled><span>Right</span></Button>
+                {['EM', 'CM', 'EW', 'CHW'].map(initial => fact(initial))}
                 <div>
                   {isValidating && <Loader
                     style={{
@@ -106,7 +142,7 @@ function App() {
                       borderRightColor: 'transparent',
                     }}
                   />}
-                  {error}
+                  {error?.toString()}
                 </div>
               </Button.Group>
             </Form.Field>
