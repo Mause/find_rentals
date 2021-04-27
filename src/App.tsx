@@ -131,7 +131,7 @@ function App() {
           <Columns.Column>
             <Form.Field horizontal>
               <Button.Group>
-                {['EM', 'CM', 'CW', 'CHW'].map(initial => fact(initial))}
+                {['EM', 'CM', 'EW', 'CHW'].map(initial => fact(initial))}
                 <div>
                   {isValidating && <Loader
                     style={{
