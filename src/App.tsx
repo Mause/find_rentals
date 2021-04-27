@@ -30,9 +30,10 @@ function App() {
       {
         id: 'status_color',
         accessor: (row: Property) => row.RealStatus,
-        Cell: (row: CellProps<Property, string>) => <span >
-          <FontAwesomeIcon icon={faSquareFull} style={{ color: data?.data.statusMapping[row.value] }} />
-        </span>,
+        Cell: (row: CellProps<Property, string>) => {
+          const style = data?.data.statusMapping[row.value];
+          return style ? <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} /> : null;
+        },
       },
       {
         Header: 'Status',
