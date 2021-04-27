@@ -23,7 +23,8 @@ interface Property {
 function App() {
   const { data, isValidating, error } = useSWR(
     "/api/data",
-    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" })
+    key => axios.get<{ rows: Property[], statusMapping: { [key: string]: string } }>(key, { responseType: "json" }),
+    { refreshInterval: 0 }
   );
   const columns = React.useMemo(
     (): Column<Property>[] => [
