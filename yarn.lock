@@ -1721,10 +1721,10 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/google-spreadsheet@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.1.0.tgz#d7e4e72e794113a8e9f9c09199cb8e3623d42cda"
-  integrity sha512-s/08g3wt9BCAZeC2DHMvCuVNlt8Y+FR9v/r0ZvsgmGn1YMqMdEI63HNU6R/31AAJ0xbbkdoZBQr6NN4YH9WIOA==
+"@types/google-spreadsheet@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.1.1.tgz#fbc0ba3edc510598a426831fd2e7e0f2869ce314"
+  integrity sha512-c9fjpYY9/hEQxs80mYtTSNcMSqjcK+9sNzou9RMfdHzj3r5QkzRU/6DrPzrCNh0s03GbMlYvcOJPtud20/Payg==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
