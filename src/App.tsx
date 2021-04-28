@@ -105,7 +105,7 @@ function App() {
 
   return (
     <Section>
-      <Heading>Find Rentals</Heading>
+      <Heading>Find Rentals ({rows.length})</Heading>
       <Container breakpoint="fluid">
         <Columns>
           <Columns.Column>
