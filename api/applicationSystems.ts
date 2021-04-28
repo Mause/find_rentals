@@ -1,6 +1,7 @@
 import axios from "axios";
 import _ from "lodash";
 import { OnlineApplication, Property } from "../src/types";
+import { logger } from "./logger";
 
 const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
@@ -31,9 +32,9 @@ export async function assignApplicationStatus(rows: Partial<Property>[]) {
 
         row.applicationStatus = source[row.Address.toLowerCase()];
         if (row.applicationStatus) {
-          console.log(row.system, row.applicationStatus);
+          logger.info('matched:', {system: row.system, applicationStatus: row.applicationStatus});
         } else {
-          console.log("could not locate", row.Address, " in ", source);
+          logger.info("could not locate %s in %s", row.Address, source);
         }
       */
       }
@@ -59,6 +60,8 @@ async function getOneForm(): Promise<{ [key: string]: string }> {
       },
     }
   );
+
+  logger.info("1form", { status: res.status, statusText: res.statusText });
 
   return _.fromPairs(
     res.data.complete.map((form) => [
@@ -95,6 +98,8 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
       },
     }
   );
+
+  logger.info("2apply", { status: res.status, statusText: res.statusText });
 
   return _.fromPairs(
     res.data.map((application) => [
