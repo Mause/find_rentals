@@ -2,10 +2,12 @@ on: push
 
 jobs:
    typecheck:
-     runs-on: ubuntu/latest
-     steps:
-       - name: Setup Node.js environment
-         uses: actions/setup-node@v2.1.5
-         
-       - run: yarn --frozen
-       - run: tsc .
+      runs-on: ubuntu-latest
+      steps:
+         - name: Setup Node.js environment
+           uses: actions/setup-node@v2.1.5
+         - run: yarn --frozen
+         - name: Typescript compiler
+           uses: iCrawl/action-tsc@v1
+           with:
+             build: api
