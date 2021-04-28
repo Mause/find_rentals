@@ -13,9 +13,11 @@ export async function assignApplicationStatus(rows: Partial<Property>[]) {
   await Promise.all(
     rows.map(async (row) => {
       const applied = row["Applied?"];
-      if (applied?.toLowerCase().indexOf("1form") > -1) {
+      if (!applied) return;
+
+      if (applied.toLowerCase().indexOf("1form") > -1) {
         row.system = OnlineApplication.ONE_FORM;
-      } else if (applied?.toLowerCase().indexOf("2apply") > -1) {
+      } else if (applied.toLowerCase().indexOf("2apply") > -1) {
         row.system = OnlineApplication.TWO_APPLY;
       } else {
         row.system = OnlineApplication.UNKNOWN;

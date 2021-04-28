@@ -91,8 +91,8 @@ function App() {
   }
 
   const fact = (initial: string) => (
-    <>
-      <Form.Field horizontal>
+    <div key={initial}>
+      <Form.Field horizontal >
         <Form.Field.Body>
           <Form.Checkbox checked={selected.includes(initial)} onClick={addOrRemove(initial)}>
             {initial}
@@ -100,7 +100,7 @@ function App() {
         </Form.Field.Body>
       </Form.Field>
       &nbsp;
-    </>
+    </div>
   );
 
   return (

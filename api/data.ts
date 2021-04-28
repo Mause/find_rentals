@@ -37,6 +37,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
           : [];
       }
 
+      // @ts-ignore
       orow[header] = value;
     }
 
