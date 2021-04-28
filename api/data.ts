@@ -2,6 +2,7 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import { GoogleSpreadsheet, GoogleSpreadsheetCell } from "google-spreadsheet";
 import _ from "lodash";
 import { DataResponse, Property } from "../src/types";
+import { assignApplicationStatus } from "./applicationSystems";
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
@@ -53,12 +54,12 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     }
   });
 
-  Object.assign(statusMapping, _.invert(statusMapping));
+  await assignApplicationStatus(rows);
 
   const res: DataResponse = {
     title: doc.title,
     rows: rows as Property[],
-    statusMapping,
+    statusMapping: _.invert(statusMapping),
   };
 
   response.json(res);

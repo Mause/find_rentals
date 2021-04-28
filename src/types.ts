@@ -9,6 +9,14 @@ export interface Property {
   Concerns: string;
   "Viewed?": string;
   "Status?": string;
+  system: OnlineApplication;
+  applicationStatus: string;
+}
+
+export enum OnlineApplication {
+  ONE_FORM = 'ONE_FORM',
+  TWO_APPLY = 'TWO_APPLY',
+  UNKNOWN = 'UNKNOWN'
 }
 
 export interface DataResponse {
