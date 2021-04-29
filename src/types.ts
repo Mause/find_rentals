@@ -5,19 +5,19 @@ export interface Property {
   Link: string;
   Price: string;
   Beds: number;
-  "Good things": string;
+  'Good things': string;
   Concerns: string;
-  "Viewed?": string;
-  "Applied?": string;
-  "Status?": string;
+  'Viewed?': string;
+  'Applied?': string;
+  'Status?': string;
   system: OnlineApplication;
   applicationStatus: string;
 }
 
 export enum OnlineApplication {
-  ONE_FORM = "ONE_FORM",
-  TWO_APPLY = "TWO_APPLY",
-  UNKNOWN = "UNKNOWN",
+  ONE_FORM = 'ONE_FORM',
+  TWO_APPLY = 'TWO_APPLY',
+  UNKNOWN = 'UNKNOWN',
 }
 
 export interface DataResponse {
