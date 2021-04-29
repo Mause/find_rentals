@@ -1,13 +1,12 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import endpoint from '../api/data';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import dotenv from 'dotenv';
 import { Polly } from '@pollyjs/core';
 import XHRAdapter from '@pollyjs/adapter-xhr';
-import RESTPersister from '@pollyjs/persister-rest';
+import FSPersister from '@pollyjs/persister-fs';
 
 Polly.register(XHRAdapter);
-Polly.register(RESTPersister);
+Polly.register(FSPersister);
 
 dotenv.config();
 
@@ -16,9 +15,13 @@ let polly: Polly;
 beforeEach(() => {
   polly = new Polly('Data Test', {
     adapters: ['xhr'],
-    persister: 'rest',
+    persister: 'fs',
+    persisterOptions: {
+      fs: {
+        recordingsDir: '__recordings__',
+      },
+    },
   });
-  polly.record();
 });
 afterEach(async () => {
   await polly.stop();
@@ -33,7 +36,6 @@ describe('data', () => {
     );
     const res = ({ json } as unknown) as VercelResponse;
 
-    jest.setTimeout(500000);
     await endpoint(({} as unknown) as VercelRequest, res);
 
     expect(json.mock.calls[0][0]).toMatchSnapshot();
