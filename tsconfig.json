@@ -18,7 +18,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["src/axios-vcr.d.ts"],
     "jsx": "react-jsx"
   },
   "include": [

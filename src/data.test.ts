@@ -1,67 +1,41 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import endpoint from '../api/data';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { RequestMiddleware, ResponseMiddleware } from 'axios-vcr';
 import dotenv from 'dotenv';
+import { Polly } from '@pollyjs/core';
+import XHRAdapter from '@pollyjs/adapter-xhr';
+import RESTPersister from '@pollyjs/persister-rest';
+
+Polly.register(XHRAdapter);
+Polly.register(RESTPersister);
 
 dotenv.config();
 
-let cassettes: {
-  [key: string]: {
-    axios: AxiosInstance;
-    responseInterceptor: number;
-    requestInterceptor: number;
-  };
-} = {};
+let polly: Polly;
 
-function mountCassette(axios: AxiosInstance, cassettePath: string) {
-  let responseInterceptor = axios.interceptors.response.use(
-    ResponseMiddleware.success(cassettePath),
-    ResponseMiddleware.failure
-  );
-
-  let requestInterceptor = axios.interceptors.request.use(
-    RequestMiddleware.success(cassettePath),
-    RequestMiddleware.failure
-  );
-
-  cassettes[cassettePath] = {
-    responseInterceptor: responseInterceptor,
-    requestInterceptor: requestInterceptor,
-    axios: axios,
-  };
-}
-
-function ejectCassette(cassettePath: string) {
-  let interceptors = cassettes[cassettePath];
-  let axios = interceptors.axios;
-
-  axios.interceptors.response.eject(interceptors.responseInterceptor);
-  axios.interceptors.request.eject(interceptors.requestInterceptor);
-}
-
-const CASSETTE = 'cassette.json';
-
-// beforeEach(() => {
-//   const original = axios.create;
-//   axios.create = function (config?: AxiosRequestConfig) {
-//     const instance = original.call(null, config);
-//     mountCassette(instance, CASSETTE);
-//     return instance;
-//   };
-// });
-// afterEach(() => {
-//   ejectCassette(CASSETTE);
-// });
+beforeEach(() => {
+  polly = new Polly('Data Test', {
+    adapters: ['xhr'],
+    persister: 'rest',
+  });
+  polly.record();
+});
+afterEach(async () => {
+  await polly.stop();
+});
 
 describe('data', () => {
-  it('hello', async (done) => {
-    const res = ({
-      json: jest.fn(),
-    } as unknown) as VercelResponse;
+  it('hello', async () => {
+    const json = jest.fn(
+      (body: any): VercelResponse => {
+        return res;
+      }
+    );
+    const res = ({ json } as unknown) as VercelResponse;
 
+    jest.setTimeout(500000);
     await endpoint(({} as unknown) as VercelRequest, res);
 
-    expect(res.json).toMatchSnapshot();
+    expect(json.mock.calls[0][0]).toMatchSnapshot();
   });
 });
