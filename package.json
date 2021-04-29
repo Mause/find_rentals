@@ -55,5 +55,8 @@
     "@types/google-spreadsheet": "^3.1.1",
     "@types/lodash": "^4.14.168",
     "@types/react-table": "^7.0.29"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
