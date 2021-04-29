@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader, Modal } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter, useFilters, Row, IdType } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown, faArrowUp, faExternalLinkAlt, faInfoCircle, faSquareFull } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp, faExternalLinkAlt, faMap, faInfoCircle, faSquareFull } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
 import { DataResponse, Property } from "./types";
 
@@ -67,7 +67,11 @@ function App() {
       },
       {
         Header: "Address",
-        accessor: (row: Property) => row.Address
+        accessor: (row: Property) => row.Address,
+        Cell: ({ cell: { value } }: CellProps<Property, string>) => <span>
+          {value}&nbsp;
+          <a target="_blank" rel="noreferrer" href={`https://www.google.com/maps?q=${value}`}><FontAwesomeIcon icon={faMap} /></a>
+        </span>,
       },
       {
         Header: "Price",
