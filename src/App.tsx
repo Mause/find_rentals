@@ -2,12 +2,48 @@ import React, { useState } from "react";
 import "./App.css";
 import useSWR from "swr";
 import axios from "axios";
-import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader } from "react-bulma-components";
+import { Button, Table, Tag, Section, Container, Form, Columns, Heading, Loader, Modal } from "react-bulma-components";
 import { useTable, CellProps, useSortBy, Column, useGlobalFilter, useFilters, Row, IdType } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown, faArrowUp, faExternalLinkAlt, faSquareFull } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp, faExternalLinkAlt, faInfoCircle, faSquareFull } from "@fortawesome/free-solid-svg-icons";
 import _ from "lodash";
 import { DataResponse, Property } from "./types";
+
+function PropertyInfo({ property }: { property: Property }) {
+  const [show, setShow] = useState(false);
+
+  return <>
+    <Modal show={show} onClose={() => setShow(false)}>
+      <Modal.Card>
+        <Modal.Card.Header>
+          <Modal.Card.Title>
+            {property.Address}
+          </Modal.Card.Title>
+        </Modal.Card.Header>
+        <Modal.Card.Body>
+          <Columns>
+            <Columns.Column>
+              <Table striped>
+                <tbody>
+                  <tr><th>Viewed</th><td>{property['Viewed?']}</td></tr>
+                  <tr><th>Applied</th><td>{property['Applied?']}</td></tr>
+                  <tr><th>Concerns</th><td>{property['Concerns']}</td></tr>
+                  <tr><th>Good things</th><td>{property['Good things']}</td></tr>
+                </tbody>
+              </Table>
+            </Columns.Column>
+            <Columns.Column>
+              <img alt="this is a placeholder" src="https://placekitten.com/400/300" />
+            </Columns.Column>
+          </Columns>
+        </Modal.Card.Body>
+      </Modal.Card>
+    </Modal>
+    <Button onClick={() => setShow(true)} color="ghost">
+      <FontAwesomeIcon icon={faInfoCircle} />
+    </Button>
+  </>;
+}
 
 function App() {
   const { data, isValidating, error } = useSWR(
@@ -57,6 +93,10 @@ function App() {
             <FontAwesomeIcon icon={faExternalLinkAlt} />
           </a>
         )
+      },
+      {
+        Header: 'More info',
+        Cell: ({ row: { original } }: CellProps<Property>) => <PropertyInfo property={original} />
       }
     ],
     [data?.data.statusMapping]
