@@ -1,8 +1,8 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
-import { GoogleSpreadsheet, GoogleSpreadsheetCell } from "google-spreadsheet";
-import _ from "lodash";
-import { DataResponse, Property } from "../src/types";
-import { assignApplicationStatus } from "./applicationSystems";
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
+import _ from 'lodash';
+import { DataResponse, Property } from '../src/types';
+import { assignApplicationStatus } from './applicationSystems';
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
@@ -26,13 +26,13 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     for (const header of sheet.headerValues.slice(1)) {
       let value = row[header];
 
-      if (header == "Beds") {
+      if (header == 'Beds') {
         value = parseInt(value);
-      } else if (header == "Interested") {
+      } else if (header == 'Interested') {
         value = value
           ? value
-              .split(", ")
-              .map((initial: string) => initial.split(" ")[0])
+              .split(', ')
+              .map((initial: string) => initial.split(' ')[0])
               .filter((initial: string) => initial === initial.toUpperCase())
           : [];
       }
@@ -49,8 +49,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const colour = getBackgroundColor(cell);
     if (colour) {
       row.RealStatus = statusMapping[colour!];
-      if (typeof row.RealStatus === "undefined") {
-        console.warn("unable to lookup color: ", colour);
+      if (typeof row.RealStatus === 'undefined') {
+        console.warn('unable to lookup color: ', colour);
       }
     }
   });
