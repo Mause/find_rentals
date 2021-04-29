@@ -69,8 +69,19 @@ function App() {
     rows,
     setFilter,
     setGlobalFilter,
-    prepareRow
-  } = useTable<Property>({ columns, data: data?.data.rows || [] }, useGlobalFilter, useFilters, useSortBy);
+    prepareRow,
+  } = useTable<Property>(
+    {
+      columns,
+      data: data?.data.rows || [],
+      autoResetFilters: false,
+      autoResetGlobalFilter: false,
+      autoResetSortBy: false,
+    },
+    useGlobalFilter,
+    useFilters,
+    useSortBy
+  );
 
   const [selected, setSelected] = useState<string[]>([]);
   function addOrRemove(initial: string) {
