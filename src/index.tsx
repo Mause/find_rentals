@@ -7,9 +7,9 @@ import { SWRConfig } from 'swr';
 
 ReactDOM.render(
   <React.StrictMode>
-  <SWRConfig value={{}}>
-    <App />
-  </SWRConfig>
+    <SWRConfig value={{}}>
+      <App />
+    </SWRConfig>
   </React.StrictMode>,
   document.getElementById('root')
 );
