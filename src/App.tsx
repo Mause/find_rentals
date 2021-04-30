@@ -32,7 +32,6 @@ import {
   faExternalLinkAlt,
   faInfoCircle,
   faMap,
-  faInfoCircle,
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
