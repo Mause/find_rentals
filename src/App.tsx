@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import './App.css';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import {
   Section,
   Container,
   Form,
+  Notification,
   Columns,
   Heading,
   Loader,
@@ -46,37 +47,51 @@ function PropertyInfo({ property }: { property: Property }) {
           <Modal.Card.Header>
             <Modal.Card.Title>{property.Address}</Modal.Card.Title>
           </Modal.Card.Header>
+          <div className="card-image">
+            <figure className="image is-4by3">
+              <img
+                alt="this is a house"
+                src={
+                  property.listing?.mainImage ||
+                  'https://s3-ap-southeast-2.amazonaws.com/rea-placeholder-assets/placeholder.png'
+                }
+              />
+            </figure>
+          </div>
           <Modal.Card.Body>
-            <Columns>
-              <Columns.Column>
-                <Table striped>
-                  <tbody>
-                    <tr>
-                      <th>Viewed</th>
-                      <td>{property['Viewed?']}</td>
-                    </tr>
-                    <tr>
-                      <th>Applied</th>
-                      <td>{property['Applied?']}</td>
-                    </tr>
-                    <tr>
-                      <th>Concerns</th>
-                      <td>{property['Concerns']}</td>
-                    </tr>
-                    <tr>
-                      <th>Good things</th>
-                      <td>{property['Good things']}</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Columns.Column>
-              <Columns.Column>
-                <img
-                  alt="this is a placeholder"
-                  src="https://placekitten.com/400/300"
-                />
-              </Columns.Column>
-            </Columns>
+            <Table striped>
+              <tbody>
+                <tr>
+                  <th>Viewed</th>
+                  <td>{property['Viewed?']}</td>
+                  <th>Applied</th>
+                  <td>{property['Applied?']}</td>
+                </tr>
+                <tr>
+                  <th>Concerns</th>
+                  <td>{property['Concerns']}</td>
+                  <th>Good things</th>
+                  <td>{property['Good things']}</td>
+                </tr>
+                <tr>
+                  <th>Beds</th>
+                  <td>{property.listing?.bedrooms || property.Beds}</td>
+                  <th>Bathrooms</th>
+                  <td>{property.listing?.bathrooms}</td>
+                </tr>
+                <tr>
+                  <th>Parking spaces</th>
+                  <td>{property.listing?.parkingSpaces}</td>
+                  <th>Agency</th>
+                  <td>{property.listing?.agencyName}</td>
+                </tr>
+              </tbody>
+            </Table>
+            {!property.listing && (
+              <Notification color="info">
+                Listing has been removed?
+              </Notification>
+            )}
           </Modal.Card.Body>
         </Modal.Card>
       </Modal>
