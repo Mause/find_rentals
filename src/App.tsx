@@ -256,7 +256,7 @@ function App() {
               <Form.Label>Search:&nbsp;</Form.Label>
               <Form.Field.Body>
                 <Form.Input
-                  onChange={(event) => {
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     setGlobalFilter(event.target.value);
                   }}
                 />
@@ -285,7 +285,7 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} style={{ width: 'inherit' }}>
+        <Table {...getTableProps()} style={{ width: 'inherit' }} striped>
           <thead>
             {
               // Loop over the header rows
