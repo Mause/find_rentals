@@ -21,10 +21,14 @@ export enum OnlineApplication {
   UNKNOWN = 'UNKNOWN',
 }
 
+export type StatusMapping = {
+  [key: string]: string;
+};
+
 export interface DataResponse {
   title: string;
   rows: Property[];
-  statusMapping: { [key: string]: string };
+  statusMapping: StatusMapping;
 }
 
 export interface Listing {
