@@ -35,10 +35,18 @@ import {
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import { DataResponse, Property } from './types';
+import { DataResponse, Property, StatusMapping } from './types';
 
-function PropertyInfo({ property }: { property: Property }) {
+function PropertyInfo({
+  property,
+  statusMapping,
+}: {
+  property: Property;
+  statusMapping?: StatusMapping;
+}) {
   const [show, setShow] = useState(false);
+
+  const style = (statusMapping || {})[property.RealStatus];
 
   return (
     <>
@@ -93,6 +101,13 @@ function PropertyInfo({ property }: { property: Property }) {
               </Notification>
             )}
           </Modal.Card.Body>
+          <Modal.Card.Footer>
+            {style ? (
+              <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} />
+            ) : null}
+            &nbsp;
+            {property.RealStatus}
+          </Modal.Card.Footer>
         </Modal.Card>
       </Modal>
       <Button onClick={() => setShow(true)} color="ghost">
@@ -184,7 +199,10 @@ function App() {
       {
         Header: 'More info',
         Cell: ({ row: { original } }: CellProps<Property>) => (
-          <PropertyInfo property={original} />
+          <PropertyInfo
+            property={original}
+            statusMapping={data?.data.statusMapping}
+          />
         ),
       },
     ],
