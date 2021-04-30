@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import './App.css';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import {
   Section,
   Container,
   Form,
+  Notification,
   Columns,
   Heading,
   Loader,
@@ -48,30 +49,46 @@ function PropertyInfo({ property }: { property: Property }) {
             <Modal.Card.Title>{property.Address}</Modal.Card.Title>
           </Modal.Card.Header>
           <Card.Image
-            alt="this is a placeholder"
-            src="https://placekitten.com/400/300"
+            alt="this is a house"
+            src={
+              property.listing?.mainImage ||
+              'https://s3-ap-southeast-2.amazonaws.com/rea-placeholder-assets/placeholder.png'
+            }
           />
           <Modal.Card.Body>
-            <Columns>
-              <Columns.Column>
-                <Table striped>
-                  <tbody>
-                    <tr>
-                      <th>Viewed</th>
-                      <td>{property['Viewed?']}</td>
-                      <th>Applied</th>
-                      <td>{property['Applied?']}</td>
-                    </tr>
-                    <tr>
-                      <th>Concerns</th>
-                      <td>{property['Concerns']}</td>
-                      <th>Good things</th>
-                      <td>{property['Good things']}</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Columns.Column>
-            </Columns>
+            <Table striped>
+              <tbody>
+                <tr>
+                  <th>Viewed</th>
+                  <td>{property['Viewed?']}</td>
+                  <th>Applied</th>
+                  <td>{property['Applied?']}</td>
+                </tr>
+                <tr>
+                  <th>Concerns</th>
+                  <td>{property['Concerns']}</td>
+                  <th>Good things</th>
+                  <td>{property['Good things']}</td>
+                </tr>
+                <tr>
+                  <th>Beds</th>
+                  <td>{property.listing?.bedrooms || property.Beds}</td>
+                  <th>Bathrooms</th>
+                  <td>{property.listing?.bathrooms}</td>
+                </tr>
+                <tr>
+                  <th>Parking spaces</th>
+                  <td>{property.listing?.parkingSpaces}</td>
+                  <th>Agency</th>
+                  <td>{property.listing?.agencyName}</td>
+                </tr>
+              </tbody>
+            </Table>
+            {!property.listing && (
+              <Notification color="info">
+                Listing has been removed?
+              </Notification>
+            )}
           </Modal.Card.Body>
         </Modal.Card>
       </Modal>
@@ -236,7 +253,7 @@ function App() {
               <Form.Label>Search:&nbsp;</Form.Label>
               <Form.Field.Body>
                 <Form.Input
-                  onChange={(event) => {
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     setGlobalFilter(event.target.value);
                   }}
                 />
@@ -265,7 +282,7 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} style={{ width: 'inherit' }}>
+        <Table {...getTableProps()} style={{ width: 'inherit' }} striped>
           <thead>
             {
               // Loop over the header rows
