@@ -9372,10 +9372,9 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-bulma-components@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-bulma-components/-/react-bulma-components-4.0.1.tgz#40ef6eead330f83901af64291539b34c8171efdb"
-  integrity sha512-e0sx0gvgtetYrXZKILnWerF4IjW22tQyqnVcOLjfKAqC1x9+XrlVB5IP+bafCss8kVNrWcXE4OvXQ0Z+CA5p4w==
+"react-bulma-components@https://github.com/Mause/react-bulma-components#patch-1":
+  version "4.0.2"
+  resolved "https://github.com/Mause/react-bulma-components#8b0c18bcd70d0db2b71114a9810190bfb155b254"
   dependencies:
     classnames "2.3.1"
 
