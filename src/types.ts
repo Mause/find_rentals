@@ -12,6 +12,7 @@ export interface Property {
   'Status?': string;
   system: OnlineApplication;
   applicationStatus: string;
+  listing?: Listing;
 }
 
 export enum OnlineApplication {
@@ -24,4 +25,12 @@ export interface DataResponse {
   title: string;
   rows: Property[];
   statusMapping: { [key: string]: string };
+}
+
+export interface Listing {
+  agencyName: string;
+  mainImage: string;
+  bedrooms: number;
+  bathrooms: number;
+  parkingSpaces: number;
 }
