@@ -61,7 +61,7 @@ async function getOneForm(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info("1form", { status: res.status, statusText: res.statusText });
+  logger.info('1form', { status: res.status, statusText: res.statusText });
 
   return _.fromPairs(
     res.data.complete.map((form) => [
@@ -99,7 +99,7 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info("2apply", { status: res.status, statusText: res.statusText });
+  logger.info('2apply', { status: res.status, statusText: res.statusText });
 
   return _.fromPairs(
     res.data.map((application) => [
