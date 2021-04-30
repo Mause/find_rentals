@@ -6,40 +6,37 @@ import { OnlineApplication, Property } from '../src/types';
 const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
 
-export async function assignApplicationStatus(rows: Partial<Property>[]) {
+export async function assignApplicationStatus(row: Partial<Property>) {
   /*
   const oneForm = await getOneForm();
   const twoApply = await getTwoApply();
   */
-  await Promise.all(
-    rows.map(async (row) => {
-      const applied = row['Applied?'];
-      if (!applied) return;
 
-      if (applied.toLowerCase().indexOf('1form') > -1) {
-        row.system = OnlineApplication.ONE_FORM;
-      } else if (applied.toLowerCase().indexOf('2apply') > -1) {
-        row.system = OnlineApplication.TWO_APPLY;
-      } else {
-        row.system = OnlineApplication.UNKNOWN;
-      }
+  const applied = row['Applied?'];
+  if (!applied) return;
 
-      if (row.system != OnlineApplication.UNKNOWN) {
-        row.applicationStatus = 'unknown';
-        /*
-        const source =
-          row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
+  if (applied.toLowerCase().indexOf('1form') > -1) {
+    row.system = OnlineApplication.ONE_FORM;
+  } else if (applied.toLowerCase().indexOf('2apply') > -1) {
+    row.system = OnlineApplication.TWO_APPLY;
+  } else {
+    row.system = OnlineApplication.UNKNOWN;
+  }
 
-        row.applicationStatus = source[row.Address.toLowerCase()];
-        if (row.applicationStatus) {
-          logger.info('matched:', {system: row.system, applicationStatus: row.applicationStatus});
-        } else {
-          logger.info("could not locate %s in %s", row.Address, source);
-        }
-      */
-      }
-    })
-  );
+  if (row.system != OnlineApplication.UNKNOWN) {
+    row.applicationStatus = 'unknown';
+    /*
+    const source =
+      row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
+
+    row.applicationStatus = source[row.Address.toLowerCase()];
+    if (row.applicationStatus) {
+      logger.info('matched:', {system: row.system, applicationStatus: row.applicationStatus});
+    } else {
+      logger.info("could not locate %s in %s", row.Address, source);
+    }
+    */
+  }
 }
 
 interface OneForm {
