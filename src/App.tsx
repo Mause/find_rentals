@@ -59,7 +59,7 @@ function PropertyInfo({ property }: { property: Property }) {
             </figure>
           </div>
           <Modal.Card.Body>
-            <Table striped>
+            <Table size="fullwidth" striped>
               <tbody>
                 <tr>
                   <th>Viewed</th>
@@ -285,7 +285,7 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} style={{ width: 'inherit' }} striped>
+        <Table {...getTableProps()} size="fullwidth" striped>
           <thead>
             {
               // Loop over the header rows
