@@ -31,6 +31,7 @@ import {
   faArrowUp,
   faExternalLinkAlt,
   faInfoCircle,
+  faMap,
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
@@ -106,6 +107,18 @@ function App() {
       {
         Header: 'Address',
         accessor: (row: Property) => row.Address,
+        Cell: ({ cell: { value } }: CellProps<Property, string>) => (
+          <span>
+            {value}&nbsp;
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://www.google.com/maps?q=${value}`}
+            >
+              <FontAwesomeIcon icon={faMap} />
+            </a>
+          </span>
+        ),
       },
       {
         Header: 'Price',
