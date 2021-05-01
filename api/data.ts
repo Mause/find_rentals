@@ -4,10 +4,10 @@ import _ from 'lodash';
 import { DataResponse, Property } from '../src/types';
 import { augment } from '../support';
 
-const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
-doc.useApiKey(process.env.GOOGLE_API_KEY!);
-
 export default async (request: VercelRequest, response: VercelResponse) => {
+  const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
+  doc.useApiKey(process.env.GOOGLE_API_KEY!);
+
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
 
