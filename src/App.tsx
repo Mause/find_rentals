@@ -373,8 +373,7 @@ function App() {
           <tbody>
             {_.chain(rows)
               .countBy((row) => row.original.RealStatus)
-
-              .sortBy((pair) => pair[0])
+              .sortBy(_.identity)
               .map((count, status) => (
                 <tr key={status}>
                   <td>{status}</td>
