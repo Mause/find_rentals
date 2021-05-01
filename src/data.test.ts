@@ -1,10 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import endpoint from './data';
+import endpoint from '../api/data';
 
 describe('data', () => {
-  it('hello', async () => {
+  it.skip('hello', async () => {
     const res = ({} as unknown) as VercelResponse;
-    const spy = spyOn(res, 'json');
+    const spy = jest.spyOn(res, 'json');
 
     await endpoint(({} as unknown) as VercelRequest, res);
 
