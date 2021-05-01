@@ -13,7 +13,7 @@ export function handleError<I, O>(
 
   descriptor.value = async function (listingId: I) {
     try {
-      return method.call(target, listingId);
+      return await method.call(target, listingId);
     } catch (e) {
       if (isAxiosError(e)) {
         switch (e.response?.status) {
