@@ -1,5 +1,7 @@
-import axios, { AxiosError } from 'axios';
 import { Listing } from '../src/types';
+import axios from 'axios';
+import { handleError } from './utils';
+import { ListingRetriever } from './augment';
 
 async function search() {
   const res = await axios.get(
@@ -46,39 +48,31 @@ interface REAListing {
   };
 }
 
-export async function getListing(
-  listingId: string
-): Promise<Listing | undefined> {
-  return await axios
-    .get<REAListing>(
-      `https://services.realestate.com.au/services/listings/${listingId}`
-    )
-    .then((t) => t.data)
-    .then((res) => {
-      let image = res?.mainImage || res?.images[0];
-      let mainImage: string | undefined;
-      if (image) {
-        mainImage = `${image.server}/800x600-format=webp${image.uri}`;
-      }
+class RealEstateComAu implements ListingRetriever {
+  @handleError
+  async getListing(listingId: string): Promise<Listing | undefined> {
+    const res = (
+      await axios.get<REAListing>(
+        `https://services.realestate.com.au/services/listings/${listingId}`
+      )
+    ).data;
 
-      const { agency, generalFeatures } = res;
-      return {
-        agencyName: agency.name,
-        mainImage: mainImage!,
-        bedrooms: generalFeatures.bedrooms.value,
-        bathrooms: generalFeatures.bathrooms.value,
-        parkingSpaces: generalFeatures.parkingSpaces?.value || -1,
-      };
-    })
-    .catch((error) => {
-      if (isAxiosError(error) && error.response?.status === 404) {
-        return undefined;
-      } else {
-        throw error;
-      }
-    });
+    let image = res?.mainImage || res?.images[0];
+    let mainImage: string | undefined;
+    if (image) {
+      mainImage = `${image.server}/800x600-format=webp${image.uri}`;
+    }
+
+    const { agency, generalFeatures } = res;
+    return {
+      agencyName: agency.name,
+      mainImage: mainImage!,
+      bedrooms: generalFeatures.bedrooms.value,
+      bathrooms: generalFeatures.bathrooms.value,
+      parkingSpaces: generalFeatures.parkingSpaces?.value || -1,
+    };
+  }
 }
 
-function isAxiosError(error: any): error is AxiosError {
-  return error.isAxiosError;
-}
+let getListing = new RealEstateComAu().getListing;
+export { getListing };

@@ -19,7 +19,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const orow: Partial<Property> = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    if (getBackgroundColor(cell)) {
+    if (getBackgroundColor(cell) && cell.value) {
       statusMapping[getBackgroundColor(cell)!] = cell.value.toString();
     }
 
