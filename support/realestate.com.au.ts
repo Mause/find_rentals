@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { Agent } from 'node:http';
-import { Listing } from '../../src/types';
+import { Listing } from '../src/types';
 
 async function search() {
   const res = await axios.get(
