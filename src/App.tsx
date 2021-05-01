@@ -371,11 +371,15 @@ function App() {
             <th>Count</th>
           </thead>
           <tbody>
-            {_.countBy(rows, 'original.RealStatus').map((status, count) =>
-            <tr key={status}>
-              <td>{status}</td>
-              <td>{count}</td>
-            </tr>)}
+            {_.map(
+              _.countBy(rows, (row) => row.original.RealStatus),
+              (status, count) => (
+                <tr key={status}>
+                  <td>{status}</td>
+                  <td>{count}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </Container>
