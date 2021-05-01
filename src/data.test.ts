@@ -2,8 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import endpoint from '../api/data';
 
 describe('data', () => {
-  it('hello', async () => {
-    pending();
+  it.skip('hello', async () => {
     const res = ({} as unknown) as VercelResponse;
     const spy = jest.spyOn(res, 'json');
 
