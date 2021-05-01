@@ -365,6 +365,25 @@ function App() {
             }
           </tbody>
         </Table>
+        <Table>
+          <thead>
+            <th>Status</th>
+            <th>Count</th>
+          </thead>
+          <tbody>
+            {_.chain(rows)
+              .countBy((row) => row.original.RealStatus)
+              .entries()
+              .sortBy((_, count) => count)
+              .map(([status, count]) => (
+                <tr key={status}>
+                  <td>{status}</td>
+                  <td>{count}</td>
+                </tr>
+              ))
+              .value()}
+          </tbody>
+        </Table>
       </Container>
     </Section>
   );

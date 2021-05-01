@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import { logger } from './logger';
-import { OnlineApplication, Property } from '../src/types';
+import { OnlineApplication, Property } from '../../src/types';
 
 const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;

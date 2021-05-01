@@ -2,10 +2,10 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
 import _ from 'lodash';
 import { DataResponse, Property } from '../src/types';
-import { assignApplicationStatus } from './applicationSystems';
+import { assignApplicationStatus } from './support/applicationSystems';
 import { URL } from 'url';
-import * as realEstate from './realestate.com.au';
-import * as domain from './domain.com.au';
+import * as realEstate from './support/realestate.com.au';
+import * as domain from './support/domain.com.au';
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
 doc.useApiKey(process.env.GOOGLE_API_KEY!);
