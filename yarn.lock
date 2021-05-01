@@ -1762,10 +1762,10 @@
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^7.28.1"
 
-"@testing-library/user-event@^13.1.5":
-  version "13.1.5"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-13.1.5.tgz#1ce11c37bf4df8f264fb7999ded7139e092a29bd"
-  integrity sha512-dD1FRHuWhfdcnb6H9/oaIIZHx9LQKGxbTtYV3i5Zru8I3GWWJoG2WtlAlXZ/56djO+6TvfsWPj5cXQvoTFQATQ==
+"@testing-library/user-event@^13.1.8":
+  version "13.1.8"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-13.1.8.tgz#9cbf342b88d837ee188f9f9f4df6d1beaaf179c2"
+  integrity sha512-M04HgOlJvxILf5xyrkJaEQfFOtcvhy3usLldQIEg9zgFIYQofSmFGVfFlS7BWowqlBGLrItwGMlPXCoBgoHSiw==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
@@ -9594,10 +9594,10 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-bulma-components@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-bulma-components/-/react-bulma-components-4.0.1.tgz#40ef6eead330f83901af64291539b34c8171efdb"
-  integrity sha512-e0sx0gvgtetYrXZKILnWerF4IjW22tQyqnVcOLjfKAqC1x9+XrlVB5IP+bafCss8kVNrWcXE4OvXQ0Z+CA5p4w==
+react-bulma-components@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-bulma-components/-/react-bulma-components-4.0.2.tgz#a6bdffb104b3303424fa4e069feb02afedf837e1"
+  integrity sha512-GEpc1F70h2Szd+z0wHa34auQ6NxhHNLjhqwoTsWLHFaLRRgUFuziHPKFyaf779VuPwZ0vUz9tj2XN6hKXyZ9lg==
   dependencies:
     classnames "2.3.1"
 
