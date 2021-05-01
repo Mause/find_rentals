@@ -376,7 +376,7 @@ function App() {
             {_.chain(rows)
               .countBy((row) => row.original.RealStatus)
               .entries()
-              .sortBy((_, count) => count)
+              .sortBy(([_, count]: [string, number]) => -count)
               .map(([status, count]) => (
                 <tr key={status}>
                   <td>{status}</td>
