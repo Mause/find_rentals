@@ -367,8 +367,10 @@ function App() {
         </Table>
         <Table>
           <thead>
-            <th>Status</th>
-            <th>Count</th>
+            <tr>
+              <th>Status</th>
+              <th>Count</th>
+            </tr>
           </thead>
           <tbody>
             {_.chain(rows)
