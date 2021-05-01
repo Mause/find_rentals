@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SWRConfig } from 'swr';
-import Sentry from '@sentry/react';
+import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 
 Sentry.init({
