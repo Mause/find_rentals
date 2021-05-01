@@ -1,12 +1,16 @@
 import _ from 'lodash';
 import { URL } from 'url';
-import { Property } from '../src/types';
+import { Listing, Property } from '../src/types';
 
 import * as domainComAu from './domain.com.au';
 import * as realEstateComAu from './realestate.com.au';
 import { assignApplicationStatus } from './applicationSystems';
 
 type Augmenter = (row: Partial<Property>) => Promise<void>;
+export interface ListingRetriever {
+  getListing(listingId: string): Promise<Listing | undefined>;
+}
+
 const augmenters: Augmenter[] = [assignApplicationStatus, assignListingInfo];
 
 async function assignListingInfo(property: Partial<Property>) {
