@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Listing } from '../src/types';
+import { ListingRetriever } from './augment';
+import { handleError } from './utils';
 
 interface DomainListing {
   advertiserIdentifiers: {
@@ -15,28 +17,31 @@ interface DomainListing {
   ];
 }
 
-export async function getListing(listingId: string): Promise<Listing> {
-  const {
-    bedrooms,
-    advertiserIdentifiers,
-    media,
-    bathrooms,
-    carspaces,
-  } = await get<DomainListing>(`listings/${listingId}`);
+export class DomainComAu implements ListingRetriever {
+  @handleError
+  public async getListing(listingId: string): Promise<Listing | undefined> {
+    const {
+      bedrooms,
+      advertiserIdentifiers,
+      media,
+      bathrooms,
+      carspaces,
+    } = await get<DomainListing>(`listings/${listingId}`);
 
-  const agencyName = (
-    await get<{ name: string }>(
-      'agencies/' + advertiserIdentifiers.advertiserId
-    )
-  ).name;
+    const agencyName = (
+      await get<{ name: string }>(
+        'agencies/' + advertiserIdentifiers.advertiserId
+      )
+    ).name;
 
-  return {
-    bedrooms,
-    bathrooms,
-    parkingSpaces: carspaces,
-    mainImage: media[0].url,
-    agencyName,
-  };
+    return {
+      bedrooms,
+      bathrooms,
+      parkingSpaces: carspaces,
+      mainImage: media[0].url,
+      agencyName,
+    };
+  }
 }
 
 async function get<T>(fragment: string): Promise<T> {
@@ -48,3 +53,6 @@ async function get<T>(fragment: string): Promise<T> {
   });
   return t.data;
 }
+
+const getListing = new DomainComAu().getListing;
+export { getListing };
