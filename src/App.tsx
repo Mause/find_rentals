@@ -36,10 +36,18 @@ import {
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import { DataResponse, Property } from './types';
+import { DataResponse, Property, StatusMapping } from './types';
 
-function PropertyInfo({ property }: { property: Property }) {
+function PropertyInfo({
+  property,
+  statusMapping,
+}: {
+  property: Property;
+  statusMapping?: StatusMapping;
+}) {
   const [show, setShow] = useState(false);
+
+  const style = (statusMapping || {})[property.RealStatus];
 
   return (
     <>
@@ -56,7 +64,7 @@ function PropertyInfo({ property }: { property: Property }) {
             }
           />
           <Modal.Card.Body>
-            <Table striped>
+            <Table size="fullwidth" striped>
               <tbody>
                 <tr>
                   <th>Viewed</th>
@@ -90,6 +98,13 @@ function PropertyInfo({ property }: { property: Property }) {
               </Notification>
             )}
           </Modal.Card.Body>
+          <Modal.Card.Footer>
+            {style ? (
+              <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} />
+            ) : null}
+            &nbsp;
+            {property.RealStatus}
+          </Modal.Card.Footer>
         </Modal.Card>
       </Modal>
       <Button onClick={() => setShow(true)} color="ghost">
@@ -181,7 +196,10 @@ function App() {
       {
         Header: 'More info',
         Cell: ({ row: { original } }: CellProps<Property>) => (
-          <PropertyInfo property={original} />
+          <PropertyInfo
+            property={original}
+            statusMapping={data?.data.statusMapping}
+          />
         ),
       },
     ],
@@ -282,7 +300,7 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} style={{ width: 'inherit' }} striped>
+        <Table {...getTableProps()} size="fullwidth" striped>
           <thead>
             {
               // Loop over the header rows
@@ -342,6 +360,25 @@ function App() {
                 );
               })
             }
+          </tbody>
+        </Table>
+        <Table>
+          <thead>
+            <th>Status</th>
+            <th>Count</th>
+          </thead>
+          <tbody>
+            {_.chain(rows)
+              .countBy((row) => row.original.RealStatus)
+              .entries()
+              .sortBy((_, count) => count)
+              .map(([status, count]) => (
+                <tr key={status}>
+                  <td>{status}</td>
+                  <td>{count}</td>
+                </tr>
+              ))
+              .value()}
           </tbody>
         </Table>
       </Container>

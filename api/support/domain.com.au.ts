@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Listing } from '../src/types';
+import { Listing } from '../../src/types';
 
 interface DomainListing {
   advertiserIdentifiers: {
