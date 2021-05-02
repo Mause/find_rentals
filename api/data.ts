@@ -2,10 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
 import _ from 'lodash';
 import { DataResponse, Property } from '../src/types';
-import { assignApplicationStatus } from './support/applicationSystems';
-import { URL } from 'url';
-import * as realEstate from './support/realestate.com.au';
-import * as domain from './support/domain.com.au';
+import { augment } from '../support';
 
 export default async (request: VercelRequest, response: VercelResponse) => {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
@@ -22,7 +19,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     const orow: Partial<Property> = {};
 
     let cell = sheet.getCell(row.rowIndex - 1, 0);
-    if (getBackgroundColor(cell)) {
+    if (getBackgroundColor(cell) && cell.value) {
       statusMapping[getBackgroundColor(cell)!] = cell.value.toString();
     }
 
@@ -89,26 +86,4 @@ function getBackgroundColor(
     color,
     strikethrough: textFormat?.strikethrough || false,
   });
-}
-
-type Augmenter = (row: Partial<Property>) => Promise<void>;
-const augmenters: Augmenter[] = [assignApplicationStatus, assignListingInfo];
-
-async function assignListingInfo(property: Partial<Property>) {
-  if (property.Link) {
-    const link = new URL(property.Link);
-    const listingId = _.last(link.pathname.split('-'))!;
-
-    if (link.hostname.includes('realestate.com.au')) {
-      property.listing = await realEstate.getListing(listingId);
-    } else if (link.hostname.includes('domain.com')) {
-      property.listing = await domain.getListing(listingId);
-    }
-  }
-}
-
-async function augment(rows: Partial<Property>[]) {
-  await Promise.all(
-    _.flatten(rows.map((row) => augmenters.map((augmenter) => augmenter(row))))
-  );
 }
