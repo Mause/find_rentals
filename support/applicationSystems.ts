@@ -7,10 +7,8 @@ const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
 
 export async function assignApplicationStatus(row: Partial<Property>) {
-  /*
   const oneForm = await getOneForm();
   const twoApply = await getTwoApply();
-  */
 
   const applied = row['Applied?'];
   if (!applied) return;
@@ -24,8 +22,6 @@ export async function assignApplicationStatus(row: Partial<Property>) {
   }
 
   if (row.system != OnlineApplication.UNKNOWN) {
-    row.applicationStatus = 'unknown';
-    /*
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
 
@@ -35,7 +31,6 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     } else {
       logger.info("could not locate %s in %s", row.Address, source);
     }
-    */
   }
 }
 
