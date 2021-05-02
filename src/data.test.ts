@@ -28,7 +28,7 @@ afterEach(async () => {
 });
 
 describe('data', () => {
-  it('hello', async () => {
+  it.skip('hello', async () => {
     const json = jest.fn(
       (body: any): VercelResponse => {
         return res;
