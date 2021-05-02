@@ -91,10 +91,10 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info('2apply', { status: res.status, statusText: res.statusText });
+  logger.info('2apply', { status: res.status, statusText: res.statusText, dataNull: res.data === null });
 
   return _.fromPairs(
-    res.data.map((application) => [
+    (res.data || []).map((application) => [
       application.PropDetail.Address.toLowerCase(),
       AppStatusGroup[application.AppDetail.StatusGroup],
     ])
