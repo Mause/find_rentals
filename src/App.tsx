@@ -266,8 +266,8 @@ function App() {
 
   return (
     <Section>
-      <Heading>Find Rentals ({rows.length})</Heading>
       <Container breakpoint="fluid">
+        <Heading>Find Rentals ({rows.length})</Heading>
         <Columns>
           <Columns.Column>
             <Form.Field horizontal>
@@ -303,7 +303,16 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} size="fullwidth" striped>
+        <Table
+          {...getTableProps()}
+          size="fullwidth"
+          striped
+          style={{
+            overflowX: 'scroll',
+            display: 'block',
+            whiteSpace: 'nowrap',
+          }}
+        >
           <thead>
             {
               // Loop over the header rows
