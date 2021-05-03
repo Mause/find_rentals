@@ -93,6 +93,12 @@ function PropertyInfo({
                   <th>Agency</th>
                   <td>{property.listing?.agencyName}</td>
                 </tr>
+                <tr>
+                  <th>Application system</th>
+                  <td>{property.system}</td>
+                  <th>Application system status</th>
+                  <td>{property.applicationStatus}</td>
+                </tr>
               </tbody>
             </Table>
             {!property.listing && (
