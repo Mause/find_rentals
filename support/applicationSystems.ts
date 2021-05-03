@@ -21,7 +21,6 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     row.system = OnlineApplication.UNKNOWN;
   }
 
-  row.applicationStatus = 'unknown';
   if (row.system != OnlineApplication.UNKNOWN) {
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
@@ -35,6 +34,10 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     } else {
       logger.info('could not locate %s in %s', row.Address, source);
     }
+  }
+
+  if (!row.applicationStatus) {
+    row.applicationStatus = 'unknown';
   }
 }
 
