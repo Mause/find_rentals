@@ -21,15 +21,19 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     row.system = OnlineApplication.UNKNOWN;
   }
 
+  row.applicationStatus = 'unknown';
   if (row.system != OnlineApplication.UNKNOWN) {
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
 
-    row.applicationStatus = source[row.Address.toLowerCase()];
+    row.applicationStatus = source[row.Address!.toLowerCase()];
     if (row.applicationStatus) {
-      logger.info('matched:', {system: row.system, applicationStatus: row.applicationStatus});
+      logger.info('matched:', {
+        system: row.system,
+        applicationStatus: row.applicationStatus,
+      });
     } else {
-      logger.info("could not locate %s in %s", row.Address, source);
+      logger.info('could not locate %s in %s', row.Address, source);
     }
   }
 }
@@ -91,7 +95,11 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info('2apply', { status: res.status, statusText: res.statusText, dataNull: res.data === null });
+  logger.info('2apply', {
+    status: res.status,
+    statusText: res.statusText,
+    dataNull: res.data === null,
+  });
 
   return _.fromPairs(
     (res.data || []).map((application) => [
