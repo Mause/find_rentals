@@ -17,11 +17,13 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     row.system = OnlineApplication.ONE_FORM;
   } else if (applied.toLowerCase().indexOf('2apply') > -1) {
     row.system = OnlineApplication.TWO_APPLY;
+  } else if (applied.toLowerCase().indexOf('email') > -1) {
+    row.system = OnlineApplication.EMAIL;
   } else {
     row.system = OnlineApplication.UNKNOWN;
   }
 
-  if (row.system != OnlineApplication.UNKNOWN) {
+  if (row.system === OnlineApplication.ONE_FORM || row.system === OnlineApplication.TWO_APPLY) {
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
 
