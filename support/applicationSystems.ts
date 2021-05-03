@@ -7,10 +7,8 @@ const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
 
 export async function assignApplicationStatus(row: Partial<Property>) {
-  /*
   const oneForm = await getOneForm();
   const twoApply = await getTwoApply();
-  */
 
   const applied = row['Applied?'];
   if (!applied) return;
@@ -24,18 +22,22 @@ export async function assignApplicationStatus(row: Partial<Property>) {
   }
 
   if (row.system != OnlineApplication.UNKNOWN) {
-    row.applicationStatus = 'unknown';
-    /*
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
 
-    row.applicationStatus = source[row.Address.toLowerCase()];
+    row.applicationStatus = source[row.Address!.toLowerCase()];
     if (row.applicationStatus) {
-      logger.info('matched:', {system: row.system, applicationStatus: row.applicationStatus});
+      logger.info('matched:', {
+        system: row.system,
+        applicationStatus: row.applicationStatus,
+      });
     } else {
-      logger.info("could not locate %s in %s", row.Address, source);
+      logger.info('could not locate %s in %s', row.Address, source);
     }
-    */
+  }
+
+  if (!row.applicationStatus) {
+    row.applicationStatus = 'unknown';
   }
 }
 
@@ -96,10 +98,14 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info('2apply', { status: res.status, statusText: res.statusText });
+  logger.info('2apply', {
+    status: res.status,
+    statusText: res.statusText,
+    dataNull: res.data === null,
+  });
 
   return _.fromPairs(
-    res.data.map((application) => [
+    (res.data || []).map((application) => [
       application.PropDetail.Address.toLowerCase(),
       AppStatusGroup[application.AppDetail.StatusGroup],
     ])
