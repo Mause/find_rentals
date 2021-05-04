@@ -1,3 +1,5 @@
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+
 new SentryWebpackPlugin({
   include: '.next',
   ignore: ['node_modules'],
