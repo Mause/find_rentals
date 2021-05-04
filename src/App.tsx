@@ -15,6 +15,7 @@ import {
   Loader,
   Modal,
 } from 'react-bulma-components';
+import { useMediaQuery } from 'react-responsive';
 import {
   useTable,
   CellProps,
@@ -270,6 +271,10 @@ function App() {
     </div>
   );
 
+  const isBigScreen = useMediaQuery({
+    query: '(min-device-width: 1824px)',
+  });
+
   return (
     <Section>
       <Container breakpoint="fluid">
@@ -315,7 +320,7 @@ function App() {
           striped
           style={{
             overflowX: 'scroll',
-            display: 'block',
+            display: isBigScreen ? 'table' : 'block',
             whiteSpace: 'nowrap',
           }}
         >
