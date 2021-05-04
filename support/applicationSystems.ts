@@ -23,13 +23,17 @@ export async function assignApplicationStatus(row: Partial<Property>) {
     row.system = OnlineApplication.UNKNOWN;
   }
 
-  if (row.system === OnlineApplication.ONE_FORM || row.system === OnlineApplication.TWO_APPLY) {
+  if (
+    row.system === OnlineApplication.ONE_FORM ||
+    row.system === OnlineApplication.TWO_APPLY
+  ) {
     const source =
       row.system === OnlineApplication.ONE_FORM ? oneForm : twoApply;
 
     row.applicationStatus = source[row.Address!.toLowerCase()];
     if (row.applicationStatus) {
       logger.info('matched:', {
+        address: row.Address,
         system: row.system,
         applicationStatus: row.applicationStatus,
       });
@@ -62,7 +66,13 @@ async function getOneForm(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info('1form', { status: res.status, statusText: res.statusText });
+  if (res.status !== 200) {
+    logger.error('error calling 1form', {
+      status: res.status,
+      statusText: res.statusText,
+      data: res.data,
+    });
+  }
 
   return _.fromPairs(
     res.data.complete.map((form) => [
@@ -100,11 +110,15 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     }
   );
 
-  logger.info('2apply', {
-    status: res.status,
-    statusText: res.statusText,
-    dataNull: res.data === null,
-  });
+  if (res.status != 200) {
+    logger.error('error calling 2apply', {
+      status: res.status,
+      statusText: res.statusText,
+      data: res.data,
+    });
+  } else if (res.data == null) {
+    logger.error('2apply token has expired');
+  }
 
   return _.fromPairs(
     (res.data || []).map((application) => [
