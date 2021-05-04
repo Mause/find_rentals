@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "next build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-bulma-components)/\"",
     "gettoken": "npx ts-node -O '{\"module\":\"commonjs\"}' -s getToken.ts",
     "eject": "react-scripts eject",
