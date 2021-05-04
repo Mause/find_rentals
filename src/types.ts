@@ -18,6 +18,7 @@ export interface Property {
 export enum OnlineApplication {
   ONE_FORM = 'ONE_FORM',
   TWO_APPLY = 'TWO_APPLY',
+  EMAIL = 'EMAIL',
   UNKNOWN = 'UNKNOWN',
 }
 

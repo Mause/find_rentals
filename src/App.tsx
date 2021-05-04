@@ -15,6 +15,7 @@ import {
   Loader,
   Modal,
 } from 'react-bulma-components';
+import { useMediaQuery } from 'react-responsive';
 import {
   useTable,
   CellProps,
@@ -92,6 +93,12 @@ function PropertyInfo({
                   <td>{property.listing?.parkingSpaces}</td>
                   <th>Agency</th>
                   <td>{property.listing?.agencyName}</td>
+                </tr>
+                <tr>
+                  <th>Application system</th>
+                  <td>{property.system}</td>
+                  <th>Application system status</th>
+                  <td>{property.applicationStatus}</td>
                 </tr>
               </tbody>
             </Table>
@@ -264,10 +271,14 @@ function App() {
     </div>
   );
 
+  const isBigScreen = useMediaQuery({
+    query: '(min-device-width: 1824px)',
+  });
+
   return (
     <Section>
-      <Heading>Find Rentals ({rows.length})</Heading>
       <Container breakpoint="fluid">
+        <Heading>Find Rentals ({rows.length})</Heading>
         <Columns>
           <Columns.Column>
             <Form.Field horizontal>
@@ -303,7 +314,16 @@ function App() {
             </Form.Field>
           </Columns.Column>
         </Columns>
-        <Table {...getTableProps()} size="fullwidth" striped>
+        <Table
+          {...getTableProps()}
+          size="fullwidth"
+          striped
+          style={{
+            overflowX: 'scroll',
+            display: isBigScreen ? 'table' : 'block',
+            whiteSpace: 'nowrap',
+          }}
+        >
           <thead>
             {
               // Loop over the header rows
