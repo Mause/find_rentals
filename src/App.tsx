@@ -14,6 +14,7 @@ import {
   Heading,
   Loader,
   Modal,
+  Card,
 } from 'react-bulma-components';
 import { useMediaQuery } from 'react-responsive';
 import {
@@ -56,17 +57,13 @@ function PropertyInfo({
           <Modal.Card.Header>
             <Modal.Card.Title>{property.Address}</Modal.Card.Title>
           </Modal.Card.Header>
-          <div className="card-image">
-            <figure className="image is-4by3">
-              <img
-                alt="this is a house"
-                src={
-                  property.listing?.mainImage ||
-                  'https://s3-ap-southeast-2.amazonaws.com/rea-placeholder-assets/placeholder.png'
-                }
-              />
-            </figure>
-          </div>
+          <Card.Image
+            alt="this is a house"
+            src={
+              property.listing?.mainImage ||
+              'https://s3-ap-southeast-2.amazonaws.com/rea-placeholder-assets/placeholder.png'
+            }
+          />
           <Modal.Card.Body>
             <Table size="fullwidth" striped>
               <tbody>
