@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { DataResponse, Property } from '../src/types';
 import { augment } from '../support';
 
-export default async (request: VercelRequest, response: VercelResponse) => {
+async function getProperties(): Promise<Property[]> {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
   doc.useApiKey(process.env.GOOGLE_API_KEY!);
 
@@ -54,6 +54,12 @@ export default async (request: VercelRequest, response: VercelResponse) => {
       }
     }
   });
+
+  return rows;
+}
+
+export default async (request: VercelRequest, response: VercelResponse) => {
+  const rows = await getProperties();
 
   await augment(rows);
 
