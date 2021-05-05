@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { DataResponse, Property } from '../src/types';
 import { augment } from '../support';
 
-async function getProperties(): Promise<Property[]> {
+async function getProperties(): Promise<Partial<Property>[]> {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
   doc.useApiKey(process.env.GOOGLE_API_KEY!);
 
