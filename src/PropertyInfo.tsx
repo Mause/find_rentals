@@ -73,7 +73,7 @@ export function PropertyInfo({
                   <th>Available</th>
                   <td>
                     {property.Available
-                      ? format(parseISO(property.Available), 'dd/mm/yyy')
+                      ? format(parseISO(property.Available), 'dd/MM/yyyy')
                       : 'unknown'}
                   </td>
                 </tr>
