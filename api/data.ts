@@ -38,6 +38,7 @@ async function getProperties(): Promise<{
         value = value
           ? value
               .split(', ')
+              .filter((initial: string) => initial !== '-')
               .map((initial: string) => initial.split(' ')[0])
               .filter((initial: string) => initial === initial.toUpperCase())
           : [];
