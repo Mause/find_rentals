@@ -16,7 +16,8 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
-  "include": ["src", "support", "api"]
+  "include": ["src", "support", "api"],
+  "exclude": ["node_modules"]
 }
