@@ -12,6 +12,7 @@ export interface Property {
   'Status?': string;
   system: OnlineApplication;
   applicationStatus: string;
+  Available?: string;
   listing?: Listing;
 }
 
