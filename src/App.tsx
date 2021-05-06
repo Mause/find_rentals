@@ -9,12 +9,9 @@ import {
   Section,
   Container,
   Form,
-  Notification,
   Columns,
   Heading,
   Loader,
-  Modal,
-  Card,
 } from 'react-bulma-components';
 import { useMediaQuery } from 'react-responsive';
 import {
@@ -33,102 +30,11 @@ import {
   faArrowUp,
   faExternalLinkAlt,
   faMap,
-  faInfoCircle,
   faSquareFull,
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
-import { DataResponse, Property, StatusMapping } from './types';
-import { parseISO, format } from 'date-fns';
-
-function PropertyInfo({
-  property,
-  statusMapping,
-}: {
-  property: Property;
-  statusMapping?: StatusMapping;
-}) {
-  const [show, setShow] = useState(false);
-
-  const style = (statusMapping || {})[property.RealStatus];
-
-  return (
-    <>
-      <Modal show={show} onClose={() => setShow(false)}>
-        <Modal.Card>
-          <Modal.Card.Header>
-            <Modal.Card.Title>{property.Address}</Modal.Card.Title>
-          </Modal.Card.Header>
-          <Card.Image
-            alt="this is a house"
-            src={
-              property.listing?.mainImage ||
-              'https://s3-ap-southeast-2.amazonaws.com/rea-placeholder-assets/placeholder.png'
-            }
-          />
-          <Modal.Card.Body>
-            <Table size="fullwidth" striped>
-              <tbody>
-                <tr>
-                  <th>Viewed</th>
-                  <td>{property['Viewed?']}</td>
-                  <th>Applied</th>
-                  <td>{property['Applied?']}</td>
-                </tr>
-                <tr>
-                  <th>Concerns</th>
-                  <td>{property['Concerns']}</td>
-                  <th>Good things</th>
-                  <td>{property['Good things']}</td>
-                </tr>
-                <tr>
-                  <th>Beds</th>
-                  <td>{property.listing?.bedrooms || property.Beds}</td>
-                  <th>Bathrooms</th>
-                  <td>{property.listing?.bathrooms}</td>
-                </tr>
-                <tr>
-                  <th>Parking spaces</th>
-                  <td>{property.listing?.parkingSpaces}</td>
-                  <th>Agency</th>
-                  <td>{property.listing?.agencyName}</td>
-                </tr>
-                <tr>
-                  <th>Application system</th>
-                  <td>{property.system}</td>
-                  <th>Application system status</th>
-                  <td>{property.applicationStatus}</td>
-                </tr>
-                <tr>
-                  <th>Available</th>
-                  <td>
-                    {property.Available
-                      ? format(parseISO(property.Available), 'dd/mm/yyy')
-                      : 'unknown'}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            {!property.listing && (
-              <Notification color="info">
-                Listing has been removed?
-              </Notification>
-            )}
-          </Modal.Card.Body>
-          <Modal.Card.Footer>
-            {style ? (
-              <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} />
-            ) : null}
-            &nbsp;
-            {property.RealStatus}
-          </Modal.Card.Footer>
-        </Modal.Card>
-      </Modal>
-      <Button onClick={() => setShow(true)} color="ghost">
-        <FontAwesomeIcon icon={faInfoCircle} />
-      </Button>
-    </>
-  );
-}
+import { DataResponse, Property } from './types';
+import { PropertyInfo } from './PropertyInfo';
 
 function App() {
   const { data, isValidating, error } = useSWR(
