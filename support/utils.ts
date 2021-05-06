@@ -12,7 +12,7 @@ const serviceAccount = JSON.parse(
 );
 const datastore = new Firestore({
   credentials: serviceAccount,
-  projectId: serviceAccount.projectId,
+  projectId: serviceAccount.project_id,
 });
 
 function isAxiosError(error: any): error is AxiosError {
