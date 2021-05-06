@@ -38,6 +38,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
 import { DataResponse, Property, StatusMapping } from './types';
+import { parseISO, format } from 'date-fns';
 
 function PropertyInfo({
   property,
@@ -96,6 +97,14 @@ function PropertyInfo({
                   <td>{property.system}</td>
                   <th>Application system status</th>
                   <td>{property.applicationStatus}</td>
+                </tr>
+                <tr>
+                  <th>Available</th>
+                  <td>
+                    {property.Available
+                      ? format(parseISO(property.Available), 'dd/mm/yyy')
+                      : 'unknown'}
+                  </td>
                 </tr>
               </tbody>
             </Table>
