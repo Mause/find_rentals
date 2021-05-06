@@ -10,10 +10,10 @@ type Toop<I, O> = TypedPropertyDescriptor<
 const keyFilename = 'find-rentals-c060658e2390.json';
 const serviceAccount = process.env.GCLOUD_CREDENTIALS
   ? JSON.parse(Buffer.from(process.env.GCLOUD_CREDENTIALS, 'base64').toString())
-  : {};
+  : undefined;
 const datastore = new Firestore({
   credentials: serviceAccount,
-  projectId: serviceAccount.project_id,
+  projectId: serviceAccount?.project_id,
   keyFilename: serviceAccount ? undefined : keyFilename,
 });
 
