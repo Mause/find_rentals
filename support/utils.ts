@@ -6,7 +6,11 @@ type Toop<I, O> = TypedPropertyDescriptor<
   (listingId: I) => Promise<O | undefined>
 >;
 
-const datastore = new Firestore({});
+// Load the service account key JSON file.
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.GCLOUD_CREDENTIALS!, 'base64').toString()
+);
+const datastore = new Firestore({ credentials: serviceAccount });
 
 function isAxiosError(error: any): error is AxiosError {
   return error.isAxiosError;
