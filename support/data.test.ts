@@ -2,10 +2,10 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import endpoint from '../api/data';
 import dotenv from 'dotenv';
 import { Polly } from '@pollyjs/core';
-import XHRAdapter from '@pollyjs/adapter-xhr';
+import NodeHTTPAdapter from '@pollyjs/adapter-node-http';
 import FSPersister from '@pollyjs/persister-fs';
 
-Polly.register(XHRAdapter);
+Polly.register(NodeHTTPAdapter);
 Polly.register(FSPersister);
 
 dotenv.config();
@@ -14,7 +14,7 @@ let polly: Polly;
 
 beforeEach(() => {
   polly = new Polly('Data Test', {
-    adapters: ['xhr'],
+    adapters: ['node-http'],
     persister: 'fs',
     persisterOptions: {
       fs: {
