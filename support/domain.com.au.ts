@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Listing } from '../src/types';
 import { ListingRetriever } from './augment';
-import { handleError } from './utils';
+import { cached, handleError } from './utils';
 
 interface DomainListing {
   advertiserIdentifiers: {
@@ -18,6 +18,7 @@ interface DomainListing {
 }
 
 export class DomainComAu implements ListingRetriever {
+  @cached<string, Listing>('domain.com.au')
   @handleError
   public async getListing(listingId: string): Promise<Listing | undefined> {
     const {

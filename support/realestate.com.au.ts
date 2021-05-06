@@ -1,6 +1,6 @@
 import { Listing } from '../src/types';
 import axios from 'axios';
-import { handleError } from './utils';
+import { cached, handleError } from './utils';
 import { ListingRetriever } from './augment';
 
 async function search() {
@@ -49,6 +49,7 @@ interface REAListing {
 }
 
 class RealEstateComAu implements ListingRetriever {
+  @cached<string, Listing>('realestate.com.au')
   @handleError
   async getListing(listingId: string): Promise<Listing | undefined> {
     const res = (
