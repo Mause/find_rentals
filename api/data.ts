@@ -1,10 +1,13 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
 import _ from 'lodash';
-import { DataResponse, Property } from '../src/types';
+import { DataResponse, Property, StatusMapping } from '../src/types';
 import { augment } from '../support';
 
-export default async (request: VercelRequest, response: VercelResponse) => {
+async function getProperties(): Promise<{
+  rows: Partial<Property>[];
+  statusMapping: StatusMapping;
+}> {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
   doc.useApiKey(process.env.GOOGLE_API_KEY!);
 
@@ -55,10 +58,15 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     }
   });
 
+  return { rows, statusMapping };
+}
+
+export default async (request: VercelRequest, response: VercelResponse) => {
+  const { rows, statusMapping } = await getProperties();
+
   await augment(rows);
 
   const res: DataResponse = {
-    title: doc.title,
     rows: rows as Property[],
     statusMapping: _.invert(statusMapping),
   };

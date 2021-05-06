@@ -27,7 +27,6 @@ export type StatusMapping = {
 };
 
 export interface DataResponse {
-  title: string;
   rows: Property[];
   statusMapping: StatusMapping;
 }
