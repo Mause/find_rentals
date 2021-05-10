@@ -7,7 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@google-cloud/firestore": "^4.11.0",
-    "@sentry/react": "^6.3.5",
+    "@sentry/react": "^6.3.6",
     "@sentry/tracing": "^6.3.5",
     "@vercel/node": "^1.10.0",
     "axios": "^0.21.1",
@@ -78,7 +78,7 @@
     "husky": "^6.0.0",
     "inquirer": "^8.0.0",
     "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.0"
   },
   "prettier": {
     "singleQuote": true
