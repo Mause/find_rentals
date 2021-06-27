@@ -78,7 +78,7 @@
     "husky": "^6.0.0",
     "inquirer": "^8.0.0",
     "lint-staged": "^11.0.0",
-    "prettier": "^2.3.0"
+    "prettier": "^2.3.2"
   },
   "prettier": {
     "singleQuote": true
