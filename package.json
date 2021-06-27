@@ -76,9 +76,9 @@
     "@types/react-table": "^7.7.0",
     "@types/winston": "^2.4.4",
     "husky": "^6.0.0",
-    "inquirer": "^8.0.0",
+    "inquirer": "^8.1.1",
     "lint-staged": "^11.0.0",
-    "prettier": "^2.3.0"
+    "prettier": "^2.3.2"
   },
   "prettier": {
     "singleQuote": true
