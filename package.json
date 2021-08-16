@@ -70,7 +70,7 @@
     "@types/pollyjs__adapter-xhr": "^2.6.1",
     "@types/pollyjs__core": "^4.3.2",
     "@types/pollyjs__persister-fs": "^2.0.1",
-    "@types/react": "^17.0.8",
+    "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.5",
     "@types/react-responsive": "^8.0.2",
     "@types/react-table": "^7.7.0",
