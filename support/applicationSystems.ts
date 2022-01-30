@@ -61,7 +61,7 @@ async function getOneForm(): Promise<{ [key: string]: string }> {
     'https://www.1form.com/ras-api/dashboard',
     {
       headers: {
-        cookie: ONE_FORM_COOKIE,
+        cookie: ONE_FORM_COOKIE!,
       },
     }
   );
@@ -104,7 +104,7 @@ async function getTwoApply(): Promise<{ [key: string]: string }> {
     'https://inspectre-ta.azurewebsites.net/api/Application',
     {
       headers: {
-        Token: TWO_APPLY_TOKEN,
+        Token: TWO_APPLY_TOKEN!,
         BuildNumber: 1,
       },
     }
