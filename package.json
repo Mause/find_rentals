@@ -64,7 +64,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/google-spreadsheet": "^3.1.2",
     "@types/inquirer": "^8.0.0",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.0.0",
     "@types/lodash": "^4.14.170",
     "@types/node": "^15.6.1",
     "@types/pollyjs__adapter-xhr": "^2.6.1",
