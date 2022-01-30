@@ -12,6 +12,7 @@ export interface Property {
   'Status?': string;
   system: OnlineApplication;
   applicationStatus: string;
+  Available?: string;
   listing?: Listing;
 }
 
@@ -27,7 +28,6 @@ export type StatusMapping = {
 };
 
 export interface DataResponse {
-  title: string;
   rows: Property[];
   statusMapping: StatusMapping;
 }

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import inquirer from 'inquirer';
 import { readFile } from 'fs/promises';
-import env from 'vercel/dist/index';
 import { string } from 'prop-types';
 
 interface Answers {

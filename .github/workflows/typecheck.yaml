@@ -4,10 +4,18 @@ jobs:
    typecheck:
       runs-on: ubuntu-latest
       steps:
-         - uses: actions/checkout@v2
+         - name: Harden Runner
+           uses: step-security/harden-runner@14dc64f30986eaa2ad2dddcec073f5aab18e5a24 # v1
+           with:
+             egress-policy: block
+             allowed-endpoints: 
+               github.com:443
+               registry.yarnpkg.com:443
+
+         - uses: actions/checkout@230611dbd0eb52da1e1f4f7bc8bb0c3a339fc8b7
          - name: Setup Node.js environment
-           uses: actions/setup-node@v2.1.5
+           uses: actions/setup-node@f099707f6e7a91b89cdebdeca599fc76cc8bf088
          - run: yarn --frozen
          - name: Typescript compiler
-           uses: iCrawl/action-tsc@v1
+           uses: iCrawl/action-tsc@c3f25c126c7805dbbbcbf6f1db0c3be6f5dac069 # v1
          - run: yarn test

@@ -1,10 +1,14 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
 import _ from 'lodash';
-import { DataResponse, Property } from '../src/types';
+import { DataResponse, Property, StatusMapping } from '../src/types';
 import { augment } from '../support';
+import { parseDate } from 'chrono-node';
 
-export default async (request: VercelRequest, response: VercelResponse) => {
+async function getProperties(): Promise<{
+  rows: Partial<Property>[];
+  statusMapping: StatusMapping;
+}> {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID!);
   doc.useApiKey(process.env.GOOGLE_API_KEY!);
 
@@ -26,12 +30,15 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     for (const header of sheet.headerValues.slice(1)) {
       let value = row[header];
 
-      if (header == 'Beds') {
+      if (header == 'Available') {
+        value = value ? parseDate(value) : undefined;
+      } else if (header == 'Beds') {
         value = parseInt(value);
       } else if (header == 'Interested') {
         value = value
           ? value
               .split(', ')
+              .filter((initial: string) => initial !== '-')
               .map((initial: string) => initial.split(' ')[0])
               .filter((initial: string) => initial === initial.toUpperCase())
           : [];
@@ -55,10 +62,15 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     }
   });
 
+  return { rows, statusMapping };
+}
+
+export default async (request: VercelRequest, response: VercelResponse) => {
+  const { rows, statusMapping } = await getProperties();
+
   await augment(rows);
 
   const res: DataResponse = {
-    title: doc.title,
     rows: rows as Property[],
     statusMapping: _.invert(statusMapping),
   };
