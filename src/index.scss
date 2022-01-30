@@ -1,15 +1,4 @@
-:root {
-  @media (prefers-color-scheme: dark) {
-    --scheme-main: 'black';
-    --scheme-invert: 'white';
-  }
-  @media (prefers-color-scheme: light) {
-    --scheme-main: 'white';
-    --scheme-invert: 'black';
-  }
-}
+@charset "utf-8";
 
-$scheme-main: var(--scheme-main);
-$scheme-invert: var(--scheme-invert);
-
-@import '~bulma/bulma.sass';
+@import './darkstyles.scss' (prefers-color-scheme: dark);
+@import './lightstyles.scss' (prefers-color-scheme: light);
