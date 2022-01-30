@@ -85,6 +85,6 @@
     "singleQuote": true
   },
   "lint-staged": {
-    "*.{js,css,md,ts,tsx,json}": "prettier --write"
+    "*.{js,css,md,ts,tsx,json,scss,sass}": "prettier --write"
   }
 }

@@ -4,6 +4,7 @@
   @media (prefers-color-scheme: dark) {
     --scheme-main: 'black';
     --scheme-invert: 'white';
+    --text-string: --scheme-invert;
   }
   @media (prefers-color-scheme: light) {
     --scheme-main: 'white';
