@@ -58,7 +58,7 @@
     "@pollyjs/adapter-xhr": "^5.1.0",
     "@pollyjs/core": "^6.0.4",
     "@pollyjs/persister-fs": "^5.1.1",
-    "@testing-library/dom": "^7.31.0",
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
