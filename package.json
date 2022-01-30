@@ -6,7 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@google-cloud/firestore": "^4.11.0",
+    "@google-cloud/firestore": "^5.0.0",
     "@sentry/react": "^6.5.1",
     "@sentry/tracing": "^6.5.1",
     "@vercel/node": "^1.12.1",
