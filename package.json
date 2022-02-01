@@ -73,7 +73,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.5",
     "@types/react-responsive": "^8.0.2",
-    "@types/react-table": "^7.7.0",
+    "@types/react-table": "^7.7.9",
     "@types/winston": "^2.4.4",
     "husky": "^7.0.0",
     "inquirer": "^8.2.0",
