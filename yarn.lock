@@ -2715,10 +2715,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/google-spreadsheet@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.1.2.tgz#67e6c87ad3556f0f46f8220d0d2b3aa46335f503"
-  integrity sha512-UWSDLaPu7iCat5PC42tDou34NNgEMb7p9Xjr3Kjmbd0yilncV3Xo7Fb7elyeqfu/jkbtx0AvVqYP/6zPlc/2Rg==
+"@types/google-spreadsheet@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@types/google-spreadsheet/-/google-spreadsheet-3.1.5.tgz#2bdc6f9f5372551e0506cb6ef3f562adcf44fc2e"
+  integrity sha512-7N+mDtZ1pmya2RRFPPl4KYc2TRgiqCNBLUZfyrKfER+u751JgCO+C24/LzF70UmUm/zhHUbzRZ5mtfaxekQ1ZQ==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
