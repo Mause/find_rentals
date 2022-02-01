@@ -2827,40 +2827,6 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/pollyjs__adapter-xhr@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@types/pollyjs__adapter-xhr/-/pollyjs__adapter-xhr-2.6.1.tgz#f3a52c1c78abd3256913a362b74b7890c696cc20"
-  integrity sha512-HxnWi7LRZlHkVrcYzdNUfAWmcWQ7Zhm9uD25ha6sriJu4BCBu+gb7GllH6DA/hNORN+5yxGQkF8hnEHHC+YUKQ==
-  dependencies:
-    "@types/pollyjs__adapter" "*"
-
-"@types/pollyjs__adapter@*":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@types/pollyjs__adapter/-/pollyjs__adapter-4.3.1.tgz#5be1c522f0351ae6f1001a38fb1f355737b0d371"
-  integrity sha512-aQXE2CDxaNV/doHMBaYMsGTj1Xn6GihD7owLRN2kd+rCw6YBRSWXEirtkwuutJYquWU2lbBl2m4usTQearpr6Q==
-  dependencies:
-    "@types/pollyjs__core" "*"
-
-"@types/pollyjs__core@*", "@types/pollyjs__core@^4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@types/pollyjs__core/-/pollyjs__core-4.3.2.tgz#b312d3c7b659d570aad2ef9a2aea43b9acdc4946"
-  integrity sha512-z9okr2lIBGLoBlbjsp0l0nTKGkIBhCOk5TTdyMSph5yDi+bQziNPpTEyp8+r7DfMlVe0G/GiqvSPsU9Fpz1FMw==
-  dependencies:
-    "@types/pollyjs__adapter" "*"
-    "@types/pollyjs__persister" "*"
-
-"@types/pollyjs__persister-fs@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/pollyjs__persister-fs/-/pollyjs__persister-fs-2.0.1.tgz#5b660cf725dd93dc10710377e923269e57b9094c"
-  integrity sha512-wYqBN0sqHg+XHGo0Hy5J7pCF0IW6+aWEz9+wKWN6VuLmq3Bh2D/pzLOADSbSH8g5IwYQWNRO4GTYONCffNSlwg==
-  dependencies:
-    "@types/pollyjs__persister" "*"
-
-"@types/pollyjs__persister@*":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@types/pollyjs__persister/-/pollyjs__persister-4.3.1.tgz#4d2491bea42846ad60b2fde796396de13d8c4c18"
-  integrity sha512-h8MNPbBGM5fRCXGA/xAw6bFZT1oJhnPaoTpDp07PHN63YZvRR0NdeJYphFod+PX1GOhDHrIXxtB912JlwJwGHw==
-
 "@types/prettier@^2.1.5":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.3.tgz#a3c65525b91fca7da00ab1a3ac2b5a2a4afbffbf"
