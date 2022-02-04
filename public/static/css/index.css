@@ -1,4 +1,4 @@
 @import url('https://cdn.rawgit.com/jenil/bulmaswatch/gh-pages/darkly/bulmaswatch.min.css')
-(prefers-color-scheme: dark);
+  prefers-color-scheme: dark;
 @import url('https://cdn.rawgit.com/jenil/bulmaswatch/gh-pages/cosmo/bulmaswatch.min.css')
-(prefers-color-scheme: light);
+  prefers-color-scheme: light;
