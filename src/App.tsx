@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState } from 'react';
-import './App.css';
 import useSWR from 'swr';
 import axios from 'axios';
 import {
