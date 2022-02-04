@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@google-cloud/firestore": "^5.0.0",
     "@sentry/react": "^6.17.3",
-    "@sentry/tracing": "^6.17.3",
+    "@sentry/tracing": "^6.17.4",
     "@vercel/node": "^1.12.1",
     "axios": "^0.25.0",
     "bulma": "0.9.3",
