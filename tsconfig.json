@@ -9,7 +9,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -17,6 +16,10 @@
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "jsx": "react-jsx"
+  },
+  "ts-node": {
+    "lib": ["dom", "esnext"],
+    "module": "commonjs"
   },
   "include": ["src", "support", "api"]
 }
