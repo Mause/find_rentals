@@ -19,3 +19,4 @@ jobs:
          - name: Typescript compiler
            uses: iCrawl/action-tsc@c3f25c126c7805dbbbcbf6f1db0c3be6f5dac069 # v1
          - run: yarn test
+         - run: yarn test:api
