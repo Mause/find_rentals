@@ -2,7 +2,7 @@ import * as axios from 'axios';
 import inquirer from 'inquirer';
 import XDGAppPaths from 'xdg-app-paths';
 import { readFile } from 'fs/promises';
-import { AxiosResponseHeaders } from 'axios';
+import { NIL } from 'uuid';
 
 interface Answers {
   mobileNumber: string;
@@ -29,18 +29,93 @@ async function main() {
       name: 'code',
       type: 'string',
       async validate(code: string, answers: Answers) {
-        const res = await get<{ Token: string; FirstName: string }>(
-          'ValidateCode',
-          { mobile: answers.mobileNumber, code: code, checkExisting: true }
-        );
-        answers.token = res.Token;
-        console.log('Token for', res.FirstName, 'is', res.Token);
+        const userModel = await get<ValidateCodeResponse>('ValidateCode', {
+          mobile: answers.mobileNumber,
+          code: code,
+        });
+
+        let codeStatus: RequestCodeStatus;
+        if (userModel.Mobile == 'MobileInUse')
+          codeStatus = RequestCodeStatus.MobileInUse;
+        else if (userModel.Mobile == 'PendingGroupMobile')
+          codeStatus = RequestCodeStatus.PendingGroupMobile;
+        else if (userModel.UserID == NIL) {
+          codeStatus = RequestCodeStatus.InvalidCode;
+        }
+        if (codeStatus) {
+          throw new Error(codeStatus.toString());
+        }
+
+        answers.token = userModel.Token;
+        console.log(userModel);
+
+        console.log('Token for', userModel.FirstName, 'is', userModel.Token);
         return true;
       },
     },
   ]);
 
   await setToken(answers.token);
+}
+
+enum RequestCodeStatus {
+  MobileInUse,
+  InvalidCode,
+  PendingGroupMobile,
+}
+
+interface ValidateCodeResponse {
+  ID: 0;
+  UserID: '00000000-0000-0000-0000-000000000000';
+  Token: '00000000-0000-0000-0000-000000000000';
+  Authenticated: boolean;
+  TokenExpiryUTC: '2022-02-05T10:01:50.4588742Z';
+  DataExpiryUTC: '2022-02-05T10:01:50.4588742Z';
+  FirstName: '';
+  LastName: '';
+  Mobile: 'MobileInUse';
+  Email: '';
+  ProfileImageURL: 'user_profile.png';
+  ConfirmOnHideProperty: true;
+  DevicePlatform: '';
+  ConfirmOnHideTip: true;
+  IdentityProviderType: 0;
+  ProviderUserID: '';
+  PushToken: '';
+  AppEnabled: false;
+  RatingActivated: 0;
+  RatingResponse: 0;
+  BuildNumber: 0;
+  LastRatingActivatedUTC: '2000-01-01T00:00:00';
+  TimeZone: '';
+  LeaseID: 0;
+  PropertyID: 0;
+  ProspectID: 0;
+  InspectionGUID: '00000000-0000-0000-0000-000000000000';
+  Preferences: {
+    Initialized: 0;
+    ID: 0;
+    MinBeds: 0;
+    MaxBeds: 0;
+    MinBaths: 0;
+    MaxBaths: 0;
+    MinCars: 0;
+    MaxCars: 0;
+    MinPrice: 0;
+    MaxPrice: 0;
+    MoveInBy: 0;
+    MoveInWith: 0;
+    MoveInDateUTC: '2000-01-01T00:00:00';
+    MoveInDate: '2000-01-01T00:00:00+00:00';
+    PropertySearchTypes: [];
+    PropertyFeatureList: [];
+    Suburbs: [];
+    Status: 1;
+    Keywords: null;
+    EarlyBirdUnsubDateUTC: '2000-01-01T00:00:00';
+    UploadError: false;
+  };
+  PreferencesJSON: null;
 }
 
 async function readJson<T>(filename: string): Promise<T> {
