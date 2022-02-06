@@ -3,6 +3,9 @@ import inquirer from 'inquirer';
 import XDGAppPaths from 'xdg-app-paths';
 import { readFile } from 'fs/promises';
 import { NIL } from 'uuid';
+import dotenv from 'dotenv';
+
+const IRE_AUTH_KEY = dotenv.config().parsed.IRE_AUTH_KEY;
 
 interface Answers {
   mobileNumber: string;
@@ -170,7 +173,12 @@ async function get<T>(route: string, params: any) {
   try {
     res = await axios.default.get<T>(
       'https://inspectre-ta.azurewebsites.net/api/Account/' + route,
-      { params }
+      {
+        params,
+        headers: {
+          AuthKey: IRE_AUTH_KEY,
+        },
+      }
     );
   } catch (e) {
     if (axios.default.isAxiosError(e)) {
