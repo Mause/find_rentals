@@ -24,6 +24,7 @@
     "react-table": "^7.7.0",
     "swr": "^1.2.1",
     "typescript": "^4.5.5",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.0.0",
     "winston": "^3.5.1"
   },
@@ -31,7 +32,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!react-bulma-components)/\"",
-    "gettoken": "npx ts-node -O '{\"module\":\"commonjs\"}' -s getToken.ts",
+    "gettoken": "node --loader ts-node/esm getToken.ts",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
@@ -72,10 +73,13 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-responsive": "^8.0.5",
     "@types/react-table": "^7.7.9",
+    "@types/uuid": "^8.3.4",
     "husky": "^7.0.0",
     "inquirer": "^8.2.0",
     "lint-staged": "^12.3.3",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
+    "xdg-app-paths": "5.1.0"
   },
   "prettier": {
     "singleQuote": true

@@ -1,7 +1,11 @@
-import axios from 'axios';
+import * as axios from 'axios';
 import inquirer from 'inquirer';
+import XDGAppPaths from 'xdg-app-paths';
 import { readFile } from 'fs/promises';
-import { string } from 'prop-types';
+import { NIL } from 'uuid';
+import dotenv from 'dotenv';
+
+const IRE_AUTH_KEY = dotenv.config().parsed.IRE_AUTH_KEY;
 
 interface Answers {
   mobileNumber: string;
@@ -15,8 +19,11 @@ async function main() {
       message: 'Mobile number',
       name: 'mobileNumber',
       type: 'string',
-      async validate(mobileNumber: string) {
-        await get('RequestCode', { mobileNumber });
+      async validate(mobile: string) {
+        const res = await get('RequestCode', { mobile });
+        if (res === false) {
+          throw new Error('Invalid mobile');
+        }
         return true;
       },
     },
@@ -25,12 +32,27 @@ async function main() {
       name: 'code',
       type: 'string',
       async validate(code: string, answers: Answers) {
-        const res = await get<{ Token: string; FirstName: string }>(
-          'ValidateCode',
-          { mobile: answers.mobileNumber, code: code }
-        );
-        answers.token = res.Token;
-        console.log('Token for', res.FirstName, 'is', res.Token);
+        const userModel = await get<ValidateCodeResponse>('ValidateCode', {
+          mobile: answers.mobileNumber,
+          code: code,
+        });
+
+        let codeStatus: RequestCodeStatus;
+        if (userModel.Mobile == 'MobileInUse')
+          codeStatus = RequestCodeStatus.MobileInUse;
+        else if (userModel.Mobile == 'PendingGroupMobile')
+          codeStatus = RequestCodeStatus.PendingGroupMobile;
+        else if (userModel.UserID == NIL) {
+          codeStatus = RequestCodeStatus.InvalidCode;
+        }
+        if (codeStatus) {
+          throw new Error(codeStatus.toString());
+        }
+
+        answers.token = userModel.Token;
+        console.log(userModel);
+
+        console.log('Token for', userModel.FirstName, 'is', userModel.Token);
         return true;
       },
     },
@@ -39,41 +61,132 @@ async function main() {
   await setToken(answers.token);
 }
 
+enum RequestCodeStatus {
+  MobileInUse,
+  InvalidCode,
+  PendingGroupMobile,
+}
+
+interface ValidateCodeResponse {
+  ID: 0;
+  UserID: '00000000-0000-0000-0000-000000000000';
+  Token: '00000000-0000-0000-0000-000000000000';
+  Authenticated: boolean;
+  TokenExpiryUTC: '2022-02-05T10:01:50.4588742Z';
+  DataExpiryUTC: '2022-02-05T10:01:50.4588742Z';
+  FirstName: '';
+  LastName: '';
+  Mobile: 'MobileInUse';
+  Email: '';
+  ProfileImageURL: 'user_profile.png';
+  ConfirmOnHideProperty: true;
+  DevicePlatform: '';
+  ConfirmOnHideTip: true;
+  IdentityProviderType: 0;
+  ProviderUserID: '';
+  PushToken: '';
+  AppEnabled: false;
+  RatingActivated: 0;
+  RatingResponse: 0;
+  BuildNumber: 0;
+  LastRatingActivatedUTC: '2000-01-01T00:00:00';
+  TimeZone: '';
+  LeaseID: 0;
+  PropertyID: 0;
+  ProspectID: 0;
+  InspectionGUID: '00000000-0000-0000-0000-000000000000';
+  Preferences: {
+    Initialized: 0;
+    ID: 0;
+    MinBeds: 0;
+    MaxBeds: 0;
+    MinBaths: 0;
+    MaxBaths: 0;
+    MinCars: 0;
+    MaxCars: 0;
+    MinPrice: 0;
+    MaxPrice: 0;
+    MoveInBy: 0;
+    MoveInWith: 0;
+    MoveInDateUTC: '2000-01-01T00:00:00';
+    MoveInDate: '2000-01-01T00:00:00+00:00';
+    PropertySearchTypes: [];
+    PropertyFeatureList: [];
+    Suburbs: [];
+    Status: 1;
+    Keywords: null;
+    EarlyBirdUnsubDateUTC: '2000-01-01T00:00:00';
+    UploadError: false;
+  };
+  PreferencesJSON: null;
+}
+
+async function readJson<T>(filename: string): Promise<T> {
+  return JSON.parse((await readFile(filename)).toString()) as T;
+}
+
 async function setToken(token: string) {
-  const projectId = JSON.parse(
-    (await readFile('.vercel/project.json')).toString()
+  const project = await readJson<{ projectId: string; orgId: string }>(
+    '.vercel/project.json'
   );
   const key = 'TWO_APPLY_TOKEN';
 
+  const configFilename =
+    XDGAppPaths('com.vercel.cli').dataDirs()[0] + '/auth.json';
+
+  const vercelToken = await readJson<{ token: string }>(configFilename);
+
+  const ax = new axios.Axios({
+    headers: {
+      Authorization: 'Bearer ' + vercelToken,
+    },
+    baseURL: 'https://api.vercel.com/v7',
+  });
+  ax.interceptors.response.use((value) => {
+    value.data = JSON.parse(value.data);
+    return value;
+  });
+
   const envs = (
-    await axios.get<{ envs: { key: string; id: string }[] }>(
-      `https://api.vercel.com/v7/projects/${projectId}/env`
+    await ax.get<{ envs: { key: string; id: string }[] }>(
+      `/projects/${project.projectId}/env`
     )
   ).data;
 
-  const ident = envs.envs.find((env) => env.key == key).id;
+  const ident = envs.envs.find((env: { key: string }) => env.key == key)!.id;
 
-  axios.patch(`https://api.vercel.com/v7/projects/{${projectId}/env/${ident}`, {
-    headers: {
-      Authorization: 'Bearer <TOKEN>',
-      'Content-Type': 'application/json',
-    },
-    body: {
-      target: ['production', 'preview', 'development'],
-      value: token,
-    },
-  });
+  console.log(
+    (
+      await ax.patch(
+        `/projects/${project.projectId}/env/${ident}`,
+        JSON.stringify({
+          target: ['production', 'preview', 'development'],
+          value: token,
+        })
+      )
+    ).data
+  );
 }
 
 async function get<T>(route: string, params: any) {
-  return (
-    await axios.get<T>(
+  let res: axios.AxiosResponse<T, any>;
+  try {
+    res = await axios.default.get<T>(
       'https://inspectre-ta.azurewebsites.net/api/Account/' + route,
       {
-        params: params,
+        params,
+        headers: {
+          AuthKey: IRE_AUTH_KEY,
+        },
       }
-    )
-  ).data;
+    );
+  } catch (e) {
+    if (axios.default.isAxiosError(e)) {
+      console.log(e.response);
+    }
+    throw e;
+  }
+  return res.data;
 }
 
 main().then(() => process.exit());

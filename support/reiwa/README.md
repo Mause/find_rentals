@@ -1,9 +1,9 @@
 # REIWA API
 
- * https://reiwa.com.au/templates/searchresults.aspx
- * https://restapi.reiwa.com.au/api/listingsearch/getlistingdetails?ListingNo=0
- * https://ac.reiwa.com.au/api/Geography
- * https://api.reiwa.com.au/
+- https://reiwa.com.au/templates/searchresults.aspx
+- https://restapi.reiwa.com.au/api/listingsearch/getlistingdetails?ListingNo=0
+- https://ac.reiwa.com.au/api/Geography
+- https://api.reiwa.com.au/
 
 ```java
 package p093b.p094a.p095a.p096c.p104d.p106b;
