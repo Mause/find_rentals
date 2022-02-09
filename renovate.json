@@ -1,6 +1,9 @@
 {
   "extends": [
     "config:base",
+    "group:monorepos",
+    "group:recommended",
+    "workarounds:all",
     ":preserveSemverRanges"
   ]
 }
