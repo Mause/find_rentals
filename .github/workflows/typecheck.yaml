@@ -12,7 +12,7 @@ jobs:
                github.com:443
                registry.yarnpkg.com:443
 
-         - uses: actions/checkout@230611dbd0eb52da1e1f4f7bc8bb0c3a339fc8b7
+         - uses: actions/checkout@2d1c1198e79c30cca5c3957b1e3b65ce95b5356e
          - name: Setup Node.js environment
            uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
          - run: yarn --frozen
