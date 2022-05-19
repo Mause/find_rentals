@@ -8548,10 +8548,10 @@ ora@^5.4.1:
     strip-ansi "^6.0.0"
     wcwidth "^1.0.1"
 
-os-paths@^4.0.1:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/os-paths/-/os-paths-4.4.0.tgz#2908b5bcb60cbfe3afb869292281a2a6b2f77ebe"
-  integrity sha512-wrAwOeXp1RRMFfQY8Sy7VaGVmPocaLwSFOYCGKSyo8qmJ+/yaafCl5BCA1IQZWqFSRBrKDYFeR9d/VyQzfH/jg==
+os-paths@^6.2.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/os-paths/-/os-paths-6.9.0.tgz#c6ab6a0a6bac700acaa415fdceb2a4c309af78fe"
+  integrity sha512-b6fbX4phQ0zydXASUr4GNAIWGtG1LzUoHdQxUpgkpYz/WszdpVGlRKkMIaLhZnRymDz4lPQfX9cx0qvDfYPmPg==
 
 os-tmpdir@~1.0.2:
   version "1.0.2"
@@ -11685,19 +11685,19 @@ ws@^8.1.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.4.2.tgz#18e749868d8439f2268368829042894b6907aa0b"
   integrity sha512-Kbk4Nxyq7/ZWqr/tarI9yIt/+iNNFOjBXEWgTb4ydaNHBNGgvf2QHbS9fdfsndfjFlFwEd4Al+mw83YkaD10ZA==
 
-xdg-app-paths@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/xdg-app-paths/-/xdg-app-paths-5.1.0.tgz#f52f724f91e88244148c085c09bcd396443d8cae"
-  integrity sha512-RAQ3WkPf4KTU1A8RtFx3gWywzVKe00tfOPFfl2NDGqbIFENQO4kqAJp7mhQjNj/33W5x5hiWWUdyfPq/5SU3QA==
-  dependencies:
-    xdg-portable "^7.0.0"
-
-xdg-portable@^7.0.0:
+xdg-app-paths@7.3.0:
   version "7.3.0"
-  resolved "https://registry.yarnpkg.com/xdg-portable/-/xdg-portable-7.3.0.tgz#c6b1610de806a2ca1fe65727d5f8402c295d2e96"
-  integrity sha512-sqMMuL1rc0FmMBOzCpd0yuy9trqF2yTTVe+E9ogwCSWQCdDEtQUwrZPT6AxqtsFGRNxycgncbP/xmOOSPw5ZUw==
+  resolved "https://registry.yarnpkg.com/xdg-app-paths/-/xdg-app-paths-7.3.0.tgz#8bbee36206e6be334c0331293971d30e847c29f4"
+  integrity sha512-0AIKfMMKidtt5fB9S10Hlf7qS5XTBGrzZSkSUvk7vC/4FhGFCdVn8SmigfspouEqOgLvB3Z+HmWKYu/1fXE9Dw==
   dependencies:
-    os-paths "^4.0.1"
+    xdg-portable "^9.0.0"
+
+xdg-portable@^9.0.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/xdg-portable/-/xdg-portable-9.4.0.tgz#cbbcffd4c9faf2f3b1c6cba04b799f885e20f31e"
+  integrity sha512-L6M5PMpxOJeT5FGnI5TjrN2jPT/rdwu+/aEjO9gbY7wLe4qq+v9oPYJpqqlaL6qNc6zE/Usmq0dvkA793nfBqw==
+  dependencies:
+    os-paths "^6.2.0"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
