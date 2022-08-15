@@ -79,7 +79,7 @@
     "lint-staged": "^12.3.3",
     "prettier": "^2.5.1",
     "ts-node": "^10.5.0",
-    "xdg-app-paths": "5.1.0"
+    "xdg-app-paths": "8.2.0"
   },
   "prettier": {
     "singleQuote": true
