@@ -7,7 +7,12 @@ const TWO_APPLY_TOKEN = process.env.TWO_APPLY_TOKEN;
 const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
 
 export async function assignApplicationStatus(row: Partial<Property>) {
-  const oneForm = await getOneForm();
+  let oneForm: Record<string, string> = {};
+  try {
+    oneForm = await getOneForm();
+  } catch (e) {
+    logger.error('Unable to retrieve 1form', e);
+  }
   const twoApply = await getTwoApply();
 
   const applied = row['Applied?'];
