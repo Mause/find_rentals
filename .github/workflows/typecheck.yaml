@@ -17,5 +17,5 @@ jobs:
            uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
          - run: yarn --frozen
          - name: Typescript compiler
-           uses: iCrawl/action-tsc@c3f25c126c7805dbbbcbf6f1db0c3be6f5dac069 # v1
+           uses: iCrawl/action-tsc@4e75d0123972ab70b23eff775979d68810be96ec # v1
          - run: yarn test
