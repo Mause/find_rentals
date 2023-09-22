@@ -60,18 +60,30 @@ function App() {
       {
         Header: 'Address',
         accessor: (row: Property) => row.Address,
-        Cell: ({ cell: { value } }: CellProps<Property, string>) => (
-          <span>
-            {value}&nbsp;
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={`https://www.google.com/maps?q=${value}`}
-            >
-              <FontAwesomeIcon icon={faMap} />
-            </a>
-          </span>
-        ),
+        Cell: ({
+          row: { original },
+          cell: { value },
+        }: CellProps<Property, string>) => {
+          const style = [
+            'Gone before we could apply',
+            'Not interested',
+          ].includes(original['RealStatus'])
+            ? { textDecoration: 'line-through' }
+            : {};
+
+          return (
+            <span style={style}>
+              {value}&nbsp;
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={`https://www.google.com/maps?q=${value}`}
+              >
+                <FontAwesomeIcon icon={faMap} />
+              </a>
+            </span>
+          );
+        },
       },
       {
         Header: 'Price',
