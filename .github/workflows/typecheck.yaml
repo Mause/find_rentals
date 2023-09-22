@@ -4,14 +4,6 @@ jobs:
    typecheck:
       runs-on: ubuntu-latest
       steps:
-         - name: Harden Runner
-           uses: step-security/harden-runner@d315ca1c4d559bfb1dee2683e673431c51d34903
-           with:
-             egress-policy: block
-             allowed-endpoints: 
-               github.com:443
-               registry.yarnpkg.com:443
-
          - uses: actions/checkout@2d1c1198e79c30cca5c3957b1e3b65ce95b5356e
          - name: Setup Node.js environment
            uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
