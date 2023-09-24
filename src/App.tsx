@@ -64,10 +64,9 @@ function App() {
           row: { original },
           cell: { value },
         }: CellProps<Property, string>) => {
-          const style = [
-            'Gone before we could apply',
-            'Not interested',
-          ].includes(original['RealStatus'])
+          const style = ['Gone before we applied', 'Not interested'].includes(
+            original['RealStatus']
+          )
             ? { textDecoration: 'line-through' }
             : {};
 
