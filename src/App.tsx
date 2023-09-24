@@ -64,9 +64,8 @@ function App() {
           row: { original },
           cell: { value },
         }: CellProps<Property, string>) => {
-          const style = ['Gone before we applied', 'Not interested'].includes(
-            original['RealStatus']
-          )
+          const status = JSON.parse(original['Status?']);
+          const style = status.strikethrough
             ? { textDecoration: 'line-through' }
             : {};
 
