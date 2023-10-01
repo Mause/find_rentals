@@ -64,10 +64,11 @@ function App() {
           row: { original },
           cell: { value },
         }: CellProps<Property, string>) => {
-          const status = JSON.parse(original['Status?']);
-          const style = status.strikethrough
-            ? { textDecoration: 'line-through' }
-            : {};
+          const style =
+            original['Status?'] &&
+            JSON.parse(original['Status?'])?.strikethrough
+              ? { textDecoration: 'line-through' }
+              : {};
 
           return (
             <span style={style}>
