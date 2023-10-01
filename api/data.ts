@@ -55,7 +55,8 @@ async function getProperties(): Promise<{
     const cell = sheet.getCell(idx + 1, 1);
     const colour = getBackgroundColor(cell);
     if (colour) {
-      row.RealStatus = statusMapping[colour!];
+      row.RealStatus = statusMapping[colour];
+      row['Status?'] = colour;
       if (typeof row.RealStatus === 'undefined') {
         console.warn('unable to lookup color: ', colour);
       }
