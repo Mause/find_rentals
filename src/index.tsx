@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { SWRConfig } from 'swr';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import Inspections from './Inspections';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -16,10 +17,18 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
+function AppWrapper() {
+  return window.location.pathname.includes('inspections') ? (
+    <Inspections />
+  ) : (
+    <App />
+  );
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <SWRConfig value={{}}>
-      <App />
+      <AppWrapper />
     </SWRConfig>
   </React.StrictMode>,
   document.getElementById('root')
