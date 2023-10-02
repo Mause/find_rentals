@@ -10,6 +10,8 @@ import {
   Section,
   Table,
 } from 'react-bulma-components';
+import parseISO from 'date-fns/parseISO';
+import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
 
 export default function Inspections() {
   const { data, isValidating, error } = useSWR<ReturnShape>('/api/inspections');
@@ -57,14 +59,21 @@ export default function Inspections() {
               <thead>
                 <tr>
                   <th>Address</th>
-                  <th>Inspector</th>
+                  <th>Viewer</th>
+                  <th>View time</th>
                 </tr>
               </thead>
               <tbody>
-                {day.map(({ prop }) => (
+                {day.map(({ prop, viewer, viewed }) => (
                   <tr key={prop.Address}>
-                    <td> {prop.Address}</td>
-                    <td>{prop['Viewed?']}</td>
+                    <td>{prop.Address}</td>
+                    <td>{viewer}</td>
+                    <td>
+                      {utcToZonedTime(
+                        parseISO(viewed as unknown as string),
+                        'Australia/Perth'
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

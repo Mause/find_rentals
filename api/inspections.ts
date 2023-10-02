@@ -18,10 +18,16 @@ async function getData() {
   const today = rows
     .filter((prop) => prop['Viewed?'])
     .filter((prop) => prop['Viewed?']!.toLowerCase() !== 'requested')
-    .map((prop) => ({
-      prop,
-      viewed: startOfDay(uk.parseDate(prop['Viewed?']!)),
-    }));
+    .map((prop) => {
+      const viewed = prop['Viewed?']?.toLowerCase();
+      const viewedParsed = uk.parseDate(viewed!);
+      return {
+        prop,
+        viewed: viewedParsed,
+        viewedDay: startOfDay(viewedParsed),
+        viewer: inferViewer(viewed),
+      };
+    });
 
   await augment(today.map(({ prop }) => prop));
 
@@ -32,6 +38,20 @@ async function getData() {
     ),
     statusMapping,
   };
+}
+
+function inferViewer(viewed: string | undefined) {
+  let viewer = undefined;
+  if (viewed) {
+    if (viewed.includes('elli')) {
+      viewer = 'Elliana';
+    } else if (viewed.includes('alex')) {
+      viewer = 'Alex';
+    } else if (viewed.includes('may')) {
+      viewer = 'May';
+    }
+  }
+  return viewer;
 }
 
 export type ReturnShape = Awaited<ReturnType<typeof getData>>;
