@@ -40,7 +40,7 @@ async function getData() {
   };
 }
 
-const config = uk.strict.clone();
+const config = uk.casual.clone();
 config.refiners.push({
   refine(context, results) {
     for (const result of results) {
