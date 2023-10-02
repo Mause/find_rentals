@@ -13,9 +13,9 @@ export default function Inspections() {
   const { data, isValidating, error } = useSWR<ReturnShape>('/api/inspections');
   const days = data?.today || [];
 
-  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedDay, setSelectedDay] = useState(1);
 
-  const [date, day] = days.length ? days[selectedDay] : ['Loading', []];
+  const [date, day] = days.length ? days[selectedDay - 1] : ['Loading', []];
 
   return (
     <Section>
