@@ -217,7 +217,7 @@ function App() {
               <Button.Group>
                 {['EM', 'MP', 'AF'].map((initial) => fact(initial))}
                 <div>
-                  {isValidating && (
+                  {isValidating ? (
                     <Loader
                       style={{
                         width: 30,
@@ -227,7 +227,7 @@ function App() {
                         borderRightColor: 'transparent',
                       }}
                     />
-                  )}
+                  ) : undefined}
                   {error?.toString()}
                 </div>
               </Button.Group>

@@ -5,6 +5,7 @@ import {
   Columns,
   Container,
   Heading,
+  Loader,
   Pagination,
   Section,
   Table,
@@ -21,7 +22,23 @@ export default function Inspections() {
   return (
     <Section>
       <Container breakpoint="fluid">
-        <Heading>Find Rentals ({date})</Heading>
+        <Heading>
+          Find Rentals ({date})
+          <div>
+            {isValidating ? (
+              <Loader
+                style={{
+                  width: 30,
+                  height: 30,
+                  border: '4px solid black',
+                  borderTopColor: 'transparent',
+                  borderRightColor: 'transparent',
+                }}
+              />
+            ) : undefined}
+            {error?.toString()}
+          </div>
+        </Heading>
         <Columns>
           <Columns.Column>
             <Pagination
@@ -29,7 +46,6 @@ export default function Inspections() {
               total={days.length}
               onChange={setSelectedDay}
             />
-            <div> {isValidating ? 'Loading....' : 'Ready'}</div>
             <Table
               size="fullwidth"
               striped
