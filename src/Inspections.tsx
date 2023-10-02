@@ -7,7 +7,7 @@ export default function Inspections() {
 
   return (
     <ul>
-      {today.map((prop) => (
+      {today.map((prop: any) => (
         <li key={prop.Address}>
           {prop.Address} ~ {prop['Viewed?']}
         </li>
