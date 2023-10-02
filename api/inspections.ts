@@ -2,34 +2,33 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { uk } from 'chrono-node';
 import { getProperties } from './data';
 import { augment } from '../support';
+import { compareAsc, endOfYesterday, startOfDay } from 'date-fns';
+import _ from 'lodash';
 
 export default async function (
   request: VercelRequest,
   response: VercelResponse
 ) {
+  response.json(await getData());
+}
+
+async function getData() {
   const { rows, statusMapping } = await getProperties();
+
+  const yesterday = endOfYesterday();
 
   const today = rows
     .filter((prop) => prop['Viewed?'])
-    .map((prop) => {
-      const viewed = uk.parseDate(prop['Viewed?']!);
-      return { ...prop, today: isToday(viewed) };
-    })
-    .filter(({ today }) => today);
+    .filter((prop) => prop['Viewed?']!.toLowerCase() !== 'requested')
+    .map((prop) => ({
+      prop,
+      viewed: startOfDay(uk.parseDate(prop['Viewed?']!)),
+    }))
+    .filter(({ viewed }) => compareAsc(viewed, yesterday));
 
-  await augment(today);
+  await augment(today.map(({ prop }) => prop));
 
-  response.json({ today, statusMapping });
+  return { today: _.groupBy(today, (row) => row.viewed), statusMapping };
 }
 
-function isToday(date: Date): boolean {
-  if (!date) {
-    return false;
-  }
-  const today = new Date();
-  return (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
-  );
-}
+export type ReturnShape = Awaited<ReturnType<typeof getData>>;
