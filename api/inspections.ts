@@ -20,7 +20,7 @@ async function getData() {
     .filter((prop) => prop['Viewed?']!.toLowerCase() !== 'requested')
     .map((prop) => {
       const viewed = prop['Viewed?']?.toLowerCase();
-      const viewedParsed = uk.parseDate(viewed!);
+      const viewedParsed = parseDate(viewed);
       return {
         prop,
         viewed: viewedParsed,
@@ -38,6 +38,20 @@ async function getData() {
     ),
     statusMapping,
   };
+}
+
+const config = uk.strict.clone();
+config.refiners.push({
+  refine(context, results) {
+    for (const result of results) {
+      result.start.assign('timezoneOffset', 8 * 60 * 60);
+    }
+    return results;
+  },
+});
+
+function parseDate(viewed: string | undefined) {
+  return config.parseDate(viewed!)!;
 }
 
 function inferViewer(viewed: string | undefined) {
