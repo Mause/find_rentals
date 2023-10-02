@@ -6,7 +6,7 @@ import { compareAsc, endOfYesterday, startOfDay } from 'date-fns';
 import _ from 'lodash';
 
 export default async function (
-  request: VercelRequest,
+  _request: VercelRequest,
   response: VercelResponse
 ) {
   response.json(await getData());
@@ -23,8 +23,8 @@ async function getData() {
     .map((prop) => ({
       prop,
       viewed: startOfDay(uk.parseDate(prop['Viewed?']!)),
-    }))
-    .filter(({ viewed }) => compareAsc(viewed, yesterday));
+    }));
+  // .filter(({ viewed }) => compareAsc(viewed, yesterday));
 
   await augment(today.map(({ prop }) => prop));
 
