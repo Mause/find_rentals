@@ -21,7 +21,7 @@
     "react-bulma-components": "4.1.0",
     "react-dom": "^17.0.2",
     "react-responsive": "^8.2.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "react-table": "^7.7.0",
     "swr": "^1.2.1",
     "type-fest": "^4.3.3",
