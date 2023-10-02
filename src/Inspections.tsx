@@ -10,7 +10,7 @@ export default function Inspections() {
 
   const [selectedDay, setSelectedDay] = useState(0);
 
-  const [date, day] = days[selectedDay];
+  const [date, day] = days.length ? days[selectedDay] : ['Loading', []];
 
   return (
     <>
