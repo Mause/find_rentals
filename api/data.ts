@@ -5,7 +5,7 @@ import { DataResponse, Property, StatusMapping } from '../src/types';
 import { augment } from '../support';
 import { uk } from 'chrono-node';
 
-async function getProperties(): Promise<{
+export async function getProperties(): Promise<{
   rows: Partial<Property>[];
   statusMapping: StatusMapping;
 }> {
