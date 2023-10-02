@@ -8,11 +8,11 @@ const ONE_FORM_COOKIE = process.env.ONE_FORM_COOKIE;
 
 export async function assignApplicationStatus(row: Partial<Property>) {
   let oneForm: Record<string, string> = {};
-  try {
-    oneForm = await getOneForm();
-  } catch (e) {
-    logger.error('Unable to retrieve 1form', e);
-  }
+  // try {
+  //   oneForm = await getOneForm();
+  // } catch (e) {
+  //   logger.error('Unable to retrieve 1form', e);
+  // }
   const twoApply = await getTwoApply();
 
   const applied = row['Applied?'];
