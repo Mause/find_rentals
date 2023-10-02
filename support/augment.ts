@@ -4,6 +4,7 @@ import { Listing, Property } from '../src/types';
 
 import * as domainComAu from './domain.com.au';
 import * as realEstateComAu from './realestate.com.au';
+import * as tenantAppComAu from './tenantapp.com.au';
 import { assignApplicationStatus } from './applicationSystems';
 
 type Augmenter = (row: Partial<Property>) => Promise<void>;
@@ -22,6 +23,8 @@ async function assignListingInfo(property: Partial<Property>) {
       property.listing = await realEstateComAu.getListing(listingId);
     } else if (link.hostname.includes('domain.com')) {
       property.listing = await domainComAu.getListing(listingId);
+    } else if (link.hostname.includes('tenantapp.com.au')) {
+      property.listing = await tenantAppComAu.getListing(link);
     }
   }
 }
