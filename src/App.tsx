@@ -36,18 +36,16 @@ import { DataResponse, Property } from './types';
 import { PropertyInfo } from './PropertyInfo';
 
 function App() {
-  const { data, isValidating, error } = useSWR(
-    '/api/data',
-    (key) => axios.get<DataResponse>(key, { responseType: 'json' }),
-    { refreshInterval: 0 }
-  );
+  const { data, isValidating, error } = useSWR<DataResponse>('/api/data', {
+    refreshInterval: 0,
+  });
   const columns = React.useMemo(
     (): Column<Property>[] => [
       {
         id: 'status_color',
         accessor: (row: Property) => row.RealStatus,
         Cell: (row: CellProps<Property, string>) => {
-          const style = data?.data.statusMapping[row.value];
+          const style = data?.statusMapping[row.value];
           return style ? (
             <FontAwesomeIcon icon={faSquareFull} style={JSON.parse(style)} />
           ) : null;
@@ -130,12 +128,12 @@ function App() {
         Cell: ({ row: { original } }: CellProps<Property>) => (
           <PropertyInfo
             property={original}
-            statusMapping={data?.data.statusMapping}
+            statusMapping={data?.statusMapping}
           />
         ),
       },
     ],
-    [data?.data.statusMapping]
+    [data?.statusMapping]
   );
 
   const {
@@ -149,7 +147,7 @@ function App() {
   } = useTable<Property>(
     {
       columns,
-      data: data?.data.rows || [],
+      data: data?.rows || [],
       autoResetFilters: false,
       autoResetGlobalFilter: false,
       autoResetSortBy: false,

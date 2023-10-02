@@ -6,6 +6,7 @@ import { SWRConfig } from 'swr';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import Inspections from './Inspections';
+import axios from 'axios';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -27,7 +28,12 @@ function AppWrapper() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <SWRConfig value={{}}>
+    <SWRConfig
+      value={{
+        fetcher: (key) =>
+          axios.get(key, { responseType: 'json' }).then(({ data }) => data),
+      }}
+    >
       <AppWrapper />
     </SWRConfig>
   </React.StrictMode>,
