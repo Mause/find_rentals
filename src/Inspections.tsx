@@ -11,10 +11,12 @@ import {
   Table,
 } from 'react-bulma-components';
 import parseISO from 'date-fns/parseISO';
-import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
+import format from 'date-fns/format';
+import { Jsonify } from 'type-fest';
 
 export default function Inspections() {
-  const { data, isValidating, error } = useSWR<ReturnShape>('/api/inspections');
+  const { data, isValidating, error } =
+    useSWR<Jsonify<ReturnShape>>('/api/inspections');
   const days = data?.today || [];
 
   const [selectedDay, setSelectedDay] = useState(1);
@@ -68,12 +70,7 @@ export default function Inspections() {
                   <tr key={prop.Address}>
                     <td>{prop.Address}</td>
                     <td>{viewer}</td>
-                    <td>
-                      {utcToZonedTime(
-                        parseISO(viewed as unknown as string),
-                        'Australia/Perth'
-                      )}
-                    </td>
+                    <td>{format(parseISO(viewed), 'hh:mmaaaa')}</td>
                   </tr>
                 ))}
               </tbody>
