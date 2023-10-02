@@ -12,12 +12,10 @@ import {
 } from 'react-bulma-components';
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
-import { Jsonify } from 'type-fest';
 import { AddressBlock } from './App';
 
 export default function Inspections() {
-  const { data, isValidating, error } =
-    useSWR<Jsonify<ReturnShape>>('/api/inspections');
+  const { data, isValidating, error } = useSWR<ReturnShape>('/api/inspections');
   const days = data?.today || [];
 
   const [selectedDay, setSelectedDay] = useState(1);
@@ -73,7 +71,12 @@ export default function Inspections() {
                       <AddressBlock value={prop.Address!} />
                     </td>
                     <td>{viewer}</td>
-                    <td>{format(parseISO(viewed), 'hh:mmaaaa')}</td>
+                    <td>
+                      {format(
+                        parseISO(viewed as unknown as string),
+                        'hh:mmaaaa'
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
