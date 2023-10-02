@@ -3,7 +3,7 @@ import { GoogleSpreadsheet, GoogleSpreadsheetCell } from 'google-spreadsheet';
 import _ from 'lodash';
 import { DataResponse, Property, StatusMapping } from '../src/types';
 import { augment } from '../support';
-import { parseDate } from 'chrono-node';
+import { uk } from 'chrono-node';
 
 async function getProperties(): Promise<{
   rows: Partial<Property>[];
@@ -31,7 +31,7 @@ async function getProperties(): Promise<{
       let value = row[header];
 
       if (header == 'Available') {
-        value = value ? parseDate(value) : undefined;
+        value = value ? uk.parseDate(value) : undefined;
       } else if (header == 'Beds') {
         value = parseInt(value);
       } else if (header == 'Interested') {
