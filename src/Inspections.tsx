@@ -1,12 +1,13 @@
 import useSWR from 'swr';
 
 export default function Inspections() {
-  const { data } = useSWR('/api/inspections');
-  if (!data) return <div>Loading....</div>;
+  const { data, isRevalidating, error } = useSWR('/api/inspections');
   const { today } = data;
 
   return (
     <ul>
+      <li>{error.toString()}</li>
+      {isRevalidating ? <li>Loading....</li> : undefined}
       {today.map((prop: any) => (
         <li key={prop.Address}>
           {prop.Address} ~ {prop['Viewed?']}
