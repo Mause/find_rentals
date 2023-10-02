@@ -25,7 +25,7 @@ export default function Inspections() {
     <Section>
       <Container breakpoint="fluid">
         <Heading>
-          Find Rentals ({date})
+          Find Rentals ({date.split('T')[0]})
           <div>
             {isValidating ? (
               <Loader
