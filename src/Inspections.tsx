@@ -31,7 +31,7 @@ export default function Inspections() {
             <ul>
               {error ? <li>{error.toString()}</li> : undefined}
               <li> {isValidating ? 'Loading....' : 'Ready'}</li>
-              {day.map((prop: any) => (
+              {day.map(({ prop }) => (
                 <li key={prop.Address}>
                   {prop.Address} ~ {prop['Viewed?']}
                 </li>
