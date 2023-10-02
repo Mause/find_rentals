@@ -7,6 +7,7 @@ import {
   Heading,
   Pagination,
   Section,
+  Table,
 } from 'react-bulma-components';
 
 export default function Inspections() {
@@ -28,15 +29,30 @@ export default function Inspections() {
               total={days.length}
               onChange={setSelectedDay}
             />
-            <ul>
-              {error ? <li>{error.toString()}</li> : undefined}
-              <li> {isValidating ? 'Loading....' : 'Ready'}</li>
-              {day.map(({ prop }) => (
-                <li key={prop.Address}>
-                  {prop.Address} ~ {prop['Viewed?']}
-                </li>
-              ))}
-            </ul>
+            <div> {isValidating ? 'Loading....' : 'Ready'}</div>
+            <Table
+              size="fullwidth"
+              striped
+              style={{
+                overflowX: 'scroll',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>Inspector</th>
+                </tr>
+              </thead>
+              <tbody>
+                {day.map(({ prop }) => (
+                  <tr key={prop.Address}>
+                    <td> {prop.Address}</td>
+                    <td>{prop['Viewed?']}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </Columns.Column>
         </Columns>
       </Container>
