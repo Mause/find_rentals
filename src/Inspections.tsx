@@ -13,6 +13,7 @@ import {
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
 import { Jsonify } from 'type-fest';
+import { AddressBlock } from './App';
 
 export default function Inspections() {
   const { data, isValidating, error } =
@@ -68,7 +69,9 @@ export default function Inspections() {
               <tbody>
                 {day.map(({ prop, viewer, viewed }) => (
                   <tr key={prop.Address}>
-                    <td>{prop.Address}</td>
+                    <td>
+                      <AddressBlock value={prop.Address!} />
+                    </td>
                     <td>{viewer}</td>
                     <td>{format(parseISO(viewed), 'hh:mmaaaa')}</td>
                   </tr>

@@ -68,18 +68,7 @@ function App() {
               ? { textDecoration: 'line-through' }
               : {};
 
-          return (
-            <span style={style}>
-              {value}&nbsp;
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={`https://www.google.com/maps?q=${value}`}
-              >
-                <FontAwesomeIcon icon={faMap} />
-              </a>
-            </span>
-          );
+          return <AddressBlock style={style} value={value} />;
         },
       },
       {
@@ -332,3 +321,18 @@ function App() {
 }
 
 export default App;
+
+export function AddressBlock({ value, style }: { style?: any; value: string }) {
+  return (
+    <span style={style}>
+      {value}&nbsp;
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href={`https://www.google.com/maps?q=${value}`}
+      >
+        <FontAwesomeIcon icon={faMap} />
+      </a>
+    </span>
+  );
+}
