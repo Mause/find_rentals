@@ -28,7 +28,13 @@ async function getData() {
 
   await augment(today.map(({ prop }) => prop));
 
-  return { today: _.groupBy(today, (row) => row.viewed), statusMapping };
+  return {
+    today: _.sortBy(
+      Object.entries(_.groupBy(today, (row) => row.viewed)),
+      ([date]) => date
+    ),
+    statusMapping,
+  };
 }
 
 export type ReturnShape = Awaited<ReturnType<typeof getData>>;

@@ -1,12 +1,11 @@
 import useSWR from 'swr';
-import * as types from './types';
 import { ReturnShape } from '../api/inspections';
 import { useState } from 'react';
-import { Button, Pagination } from 'react-bulma-components';
+import { Pagination } from 'react-bulma-components';
 
 export default function Inspections() {
   const { data, isValidating, error } = useSWR<ReturnShape>('/api/inspections');
-  const days = Object.entries(data?.today || {});
+  const days = data?.today || [];
 
   const [selectedDay, setSelectedDay] = useState(0);
 
