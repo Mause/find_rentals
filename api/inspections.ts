@@ -33,7 +33,7 @@ async function getData() {
 
   return {
     today: _.sortBy(
-      Object.entries(_.groupBy(today, (row) => row.viewed.toISOString())),
+      Object.entries(_.groupBy(today, (row) => row.viewedDay.toISOString())),
       ([date]) => date
     ),
     statusMapping,
