@@ -7,7 +7,7 @@ export default function Inspections() {
 
   return (
     <ul>
-      <li>{error.toString()}</li>
+      {error ? <li>{error.toString()}</li> : undefined}
       <li> {isValidating ? 'Loading....' : 'Ready'}</li>
       {today.map((prop: any) => (
         <li key={prop.Address}>
