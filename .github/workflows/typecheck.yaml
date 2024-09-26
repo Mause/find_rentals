@@ -6,7 +6,7 @@ jobs:
       steps:
          - uses: actions/checkout@2d1c1198e79c30cca5c3957b1e3b65ce95b5356e
          - name: Setup Node.js environment
-           uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d
+           uses: actions/setup-node@aca7b64a59c0063db8564e0ffdadd3887f1cbae5
          - run: yarn --frozen
          - name: Typescript compiler
            uses: iCrawl/action-tsc@c3f25c126c7805dbbbcbf6f1db0c3be6f5dac069 # v1
