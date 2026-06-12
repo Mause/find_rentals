@@ -2960,10 +2960,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/inquirer@^8.0.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-8.2.0.tgz#b9566d048f5ff65159f2ed97aff45fe0f00b35ec"
-  integrity sha512-BNoMetRf3gmkpAlV5we+kxyZTle7YibdOntIZbU5pyIfMdcwy784KfeZDAcuyMznkh5OLa17RVXZOGA5LTlkgQ==
+"@types/inquirer@^9.0.0":
+  version "9.0.10"
+  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-9.0.10.tgz#0ce7b234181c29e71fdb3038969a6839a39db405"
+  integrity sha512-vFW2WbXwO9eZpRT5GJGFJ/shgyMNnYozmnjakt9jCQSS1lvqX8pZEQMjJ9RdDPct/YxwciQ8+V8OYn9euIrZDA==
   dependencies:
     "@types/through" "*"
     rxjs "^7.2.0"
